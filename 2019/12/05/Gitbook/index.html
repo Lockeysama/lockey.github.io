@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Lockey</title>
-  <meta name="keywords" content="">
-  <meta name="description" content="Lockey">
+  <title>Gitbook | Lockey</title>
+  <meta name="keywords" content=" 文档工具 ">
+  <meta name="description" content="Gitbook | Lockey">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="「Lockey 随记」正式出发~！  &#96;&#96;&#96; import os &#96;&#96;&#96;">
 <meta property="og:type" content="article">
@@ -51,7 +51,7 @@
 </div>
 
 <body>
-<aside class="nav mobile">
+<aside class="nav">
     <div class="nav-left">
         <a href="/" class="avatar_target">
     <img class="avatar" src="/img/head.jpeg" />
@@ -204,12 +204,70 @@
         </div>
     </div>
 </aside>
-<div class="post index">
+<div class="post">
     <div class="pjax">
-        <article class="index">
-            <div class="toc-ref">
+        <article id="post-Gitbook" class="article article-type-post" itemscope itemprop="blogPost">
     
+        <h1 class="article-title">Gitbook</h1>
+    
+    <div class="article-meta">
         
+        
+        
+        <span class="book">
+            
+                <a  data-rel="工具">工具</a>/
+            
+                <a  data-rel="文档管理">文档管理</a>
+            
+        </span>
+        
+        
+        <span class="tag">
+            
+            <a class="color5">文档工具</a>
+            
+        </span>
+        
+    </div>
+    <div class="article-meta">
+        
+        创建时间:<time class="date" title='更新时间: 2019-12-05 18:25:35'>2019-12-05 11:58</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        <span>字数:65</span>
+        
+        
+        <span id="busuanzi_container_page_pv">
+            阅读:<span id="busuanzi_value_page_pv">
+                <span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </span>
+        </span>
+        
+        
+        <span class="top-comment" title="跳转至评论区">
+            <a href="#comments">
+                评论:<span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </a>
+        </span>
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#dockerfile"><span class="toc-text">Dockerfile</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#构建"><span class="toc-text">构建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#运行"><span class="toc-text">运行</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -222,17 +280,61 @@
     }
 </style>
 </div>
-            <pre><code class="language-python">import os
-print(1)
-</code></pre>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="dockerfile"><a class="header-anchor" href="#dockerfile"></a>Dockerfile</h2>
+<section class="sample">
+<pre><code>FROM node
+WORKDIR /build
 
-        </article>
-        
-        <p>
-            <a  class="dashang" onclick="dashangToggle()">赏</a>
-        </p>
-        
-        
+EXPOSE 4000
+
+RUN npm install gitbook -g;
+RUN npm install gitbook-cli -g;
+
+WORKDIR /build/work
+
+RUN gitbook init
+
+CMD [&quot;gitbook&quot;, &quot;serve&quot;]
+</code></pre>
+</section>
+<section class="reference"></section>
+<h2 id="构建"><a class="header-anchor" href="#构建"></a>构建</h2>
+<section class="reference">
+<p><code>$ docker build . -t acgitbook</code></p>
+</section>
+<h2 id="运行"><a class="header-anchor" href="#运行"></a>运行</h2>
+<section class="reference">
+<p><code>$ docker run -d --name acgitbook_1 -p 8006:4000 -v /root/jenkins/workspace/acdocs/work:/build/work acgitbook /bin/bash -c &quot;gitbook install;gitbook serve&quot;</code></p>
+</section>
+
+      
+       <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 196349143@qq.com </span>
+    </div>
+</article>
+
+
+<p>
+    <a  class="dashang" onclick="dashangToggle()">赏</a>
+</p>
+
+
+<div class="article_copyright">
+    <p><span class="copy-title">文章标题:</span>Gitbook</p>
+    <p><span class="copy-title">文章字数:</span><span class="post-count">65</span></p>
+    <p><span class="copy-title">本文作者:</span><a  title="Lockey">Lockey</a></p>
+    <p><span class="copy-title">发布时间:</span>2019-12-05, 11:58:04</p>
+    <p><span class="copy-title">最后更新:</span>2019-12-05, 18:25:35</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/12/05/Gitbook/" title="Gitbook">http://lockey.xyz/2019/12/05/Gitbook/</a>
+    <p>
+        <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+    </p>
+</div>
+
+
+
     <div id="comments"></div>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
 
@@ -252,6 +354,13 @@ print(1)
         gitalk.render('comments')
     })
 </script>
+
+
+
+
+    
+
+
 
 
     </div>

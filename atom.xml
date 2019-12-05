@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://lockey.xyz/"/>
-  <updated>2019-12-05T04:03:35.376Z</updated>
+  <updated>2019-12-05T10:25:35.796Z</updated>
   <id>http://lockey.xyz/</id>
   
   <author>
@@ -17,29 +17,33 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>test</title>
-    <link href="http://lockey.xyz/2019/12/05/test/"/>
-    <id>http://lockey.xyz/2019/12/05/test/</id>
+    <title>Gitbook</title>
+    <link href="http://lockey.xyz/2019/12/05/Gitbook/"/>
+    <id>http://lockey.xyz/2019/12/05/Gitbook/</id>
     <published>2019-12-05T03:58:04.000Z</published>
-    <updated>2019-12-05T04:03:35.376Z</updated>
+    <updated>2019-12-05T10:25:35.796Z</updated>
     
-    <content type="html"><![CDATA[<p>hello</p>]]></content>
+    <content type="html"><![CDATA[<h2 id="dockerfile"><a class="header-anchor" href="#dockerfile"></a>Dockerfile</h2><section class="sample"><pre><code>FROM nodeWORKDIR /buildEXPOSE 4000RUN npm install gitbook -g;RUN npm install gitbook-cli -g;WORKDIR /build/workRUN gitbook initCMD [&quot;gitbook&quot;, &quot;serve&quot;]</code></pre></section><section class="reference"></section><h2 id="构建"><a class="header-anchor" href="#构建"></a>构建</h2><section class="reference"><p><code>$ docker build . -t acgitbook</code></p></section><h2 id="运行"><a class="header-anchor" href="#运行"></a>运行</h2><section class="reference"><p><code>$ docker run -d --name acgitbook_1 -p 8006:4000 -v /root/jenkins/workspace/acdocs/work:/build/work acgitbook /bin/bash -c &quot;gitbook install;gitbook serve&quot;</code></p></section>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;p&gt;hello&lt;/p&gt;
-
+        &lt;h2 id=&quot;dockerfile&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;#dockerfile&quot;&gt;&lt;/a&gt;Dockerfile&lt;/h2&gt;
+&lt;section class=&quot;sample&quot;&gt;
+&lt;pre&gt;&lt;code&gt;FROM node
+WORKDIR /b
       
     
     </summary>
     
     
-      <category term="Test" scheme="http://lockey.xyz/categories/Test/"/>
+      <category term="工具" scheme="http://lockey.xyz/categories/%E5%B7%A5%E5%85%B7/"/>
     
-      <category term="Hello" scheme="http://lockey.xyz/categories/Test/Hello/"/>
+      <category term="文档管理" scheme="http://lockey.xyz/categories/%E5%B7%A5%E5%85%B7/%E6%96%87%E6%A1%A3%E7%AE%A1%E7%90%86/"/>
     
+    
+      <category term="文档工具" scheme="http://lockey.xyz/tags/%E6%96%87%E6%A1%A3%E5%B7%A5%E5%85%B7/"/>
     
   </entry>
   
@@ -48,15 +52,22 @@
     <link href="http://lockey.xyz/2019/12/05/hello-world/"/>
     <id>http://lockey.xyz/2019/12/05/hello-world/</id>
     <published>2019-12-05T01:59:32.609Z</published>
-    <updated>2019-12-05T01:59:32.610Z</updated>
+    <updated>2019-12-05T09:02:32.642Z</updated>
     
-    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ hexo server</span></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ hexo generate</span></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>]]></content>
+    <content type="html"><![CDATA[<p>「Lockey 随记」正式出发~！</p>```import os```]]></content>
     
     <summary type="html">
     
       
       
-        &lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.
+        &lt;p&gt;「Lockey 随记」正式出发~！&lt;/p&gt;
+
+```
+import os
+```
+
+
+
       
     
     </summary>

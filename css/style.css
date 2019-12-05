@@ -859,11 +859,12 @@ div.ac > ul > li:before,
   position: absolute;
   margin: 20px 5px 15px 5px;
   padding: 5px 0 0 5px;
+  color: #2a2934;
 }
 .nav-right .title-list form span #tagswitch:checked +#tagsWitchIcon:before {
-  border-color: #64bd63;
-  box-shadow: inset 0 0 0 0.16rem #64bd63;
-  background-color: #64bd63;
+  border-color: #f00;
+  box-shadow: inset 0 0 0 0.16rem #f00;
+  background-color: #f00;
   -webkit-transition: border 0.4s, box-shadow 0.4s, background-color 1.2s;
   transition: border 0.4s, box-shadow 0.4s, background-color 1.2s;
 }
