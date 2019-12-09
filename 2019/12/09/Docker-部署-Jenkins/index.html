@@ -7,15 +7,15 @@
   <meta name="baidu-site-verification" content="leDknqxka4" />
   <meta name="description" content="Docker 部署 Jenkins | Lockey">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="description" content="部署  Dockerfile  FROM jenkins&#x2F;jenkins:lts  MAINTAINER Lockey  USER root ARG dockerGid&#x3D;999 RUN echo &amp;quot;docker:x:${dockerGid}:jenkins&amp;quot; &amp;gt;&amp;gt; &#x2F;etc&#x2F;group    构建  docker build . -t myjenkins  运行">
-<meta name="keywords" content="Jenkins">
+<meta name="description" content="Dockerfile  FROM node WORKDIR &#x2F;build  EXPOSE 4000  RUN npm install gitbook -g; RUN npm install gitbook-cli -g;  WORKDIR &#x2F;build&#x2F;work  RUN gitbook init  CMD [&amp;quot;gitbook&amp;quot;, &amp;quot;serve&amp;quot;]    构">
+<meta name="keywords" content="文档工具">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Docker 部署 Jenkins">
-<meta property="og:url" content="http:&#x2F;&#x2F;lockey.xyz&#x2F;2019&#x2F;12&#x2F;09&#x2F;Docker-%E9%83%A8%E7%BD%B2-Jenkins&#x2F;index.html">
+<meta property="og:title" content="Gitbook">
+<meta property="og:url" content="http:&#x2F;&#x2F;www.lockey.xyz&#x2F;2019&#x2F;12&#x2F;05&#x2F;Gitbook&#x2F;index.html">
 <meta property="og:site_name" content="Lockey">
-<meta property="og:description" content="部署  Dockerfile  FROM jenkins&#x2F;jenkins:lts  MAINTAINER Lockey  USER root ARG dockerGid&#x3D;999 RUN echo &amp;quot;docker:x:${dockerGid}:jenkins&amp;quot; &amp;gt;&amp;gt; &#x2F;etc&#x2F;group    构建  docker build . -t myjenkins  运行">
+<meta property="og:description" content="Dockerfile  FROM node WORKDIR &#x2F;build  EXPOSE 4000  RUN npm install gitbook -g; RUN npm install gitbook-cli -g;  WORKDIR &#x2F;build&#x2F;work  RUN gitbook init  CMD [&amp;quot;gitbook&amp;quot;, &amp;quot;serve&amp;quot;]    构">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-12-09T01:26:31.346Z">
+<meta property="og:updated_time" content="2019-12-05T10:25:35.796Z">
 <meta name="twitter:card" content="summary">
 
 
@@ -378,7 +378,7 @@ RUN echo &quot;docker:x:${dockerGid}:jenkins&quot; &gt;&gt; /etc/group
     <p><span class="copy-title">本文作者:</span><a  title="Lockey">Lockey</a></p>
     <p><span class="copy-title">发布时间:</span>2019-12-09, 09:19:13</p>
     <p><span class="copy-title">最后更新:</span>2019-12-09, 09:26:31</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/12/09/Docker-%E9%83%A8%E7%BD%B2-Jenkins/" title="Docker 部署 Jenkins">http://lockey.xyz/2019/12/09/Docker-%E9%83%A8%E7%BD%B2-Jenkins/</a>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/12/09/Docker-%E9%83%A8%E7%BD%B2-Jenkins/" title="Docker 部署 Jenkins">http://www.lockey.xyz/2019/12/09/Docker-%E9%83%A8%E7%BD%B2-Jenkins/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
     </p>
