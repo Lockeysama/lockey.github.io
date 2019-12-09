@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://lockey.xyz/"/>
-  <updated>2019-12-05T10:25:35.796Z</updated>
+  <updated>2019-12-09T01:24:55.738Z</updated>
   <id>http://lockey.xyz/</id>
   
   <author>
@@ -15,6 +15,36 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Docker 部署 Jenkins</title>
+    <link href="http://lockey.xyz/2019/12/09/Docker-%E9%83%A8%E7%BD%B2-Jenkins/"/>
+    <id>http://lockey.xyz/2019/12/09/Docker-%E9%83%A8%E7%BD%B2-Jenkins/</id>
+    <published>2019-12-09T01:19:13.000Z</published>
+    <updated>2019-12-09T01:24:55.738Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="部署"><a class="header-anchor" href="#部署"></a>部署</h2><section class="reference"></section><h4 id="dockerfile"><a class="header-anchor" href="#dockerfile"></a>Dockerfile</h4><section class="sample"><pre><code>FROM jenkins/jenkins:ltsMAINTAINER LockeyUSER rootARG dockerGid=999RUN echo &quot;docker:x:${dockerGid}:jenkins&quot; &gt;&gt; /etc/group</code></pre></section><section class="reference"></section><h4 id="构建"><a class="header-anchor" href="#构建"></a>构建</h4><section class="reference"><p><code>docker build . -t myjenkins</code></p></section><h4 id="运行"><a class="header-anchor" href="#运行"></a>运行</h4><section class="reference"><p><code>docker run -d --privileged=true -p 8005:8080 -p 50000:50000 --name myjenkins_1 -v /root/jenkins:/var/jenkins_home -v /root/.ssh:/var/jenkins_home/.ssh -v /var/run/docker.sock:/var/run/docker.sock -v /var/lib/docker:/var/lib/docker -v $(which docker):/usr/bin/docker -v $(which docker-compose):/usr/bin/docker-compose myjenkins</code></p></section><h2 id="slave"><a class="header-anchor" href="#slave"></a>Slave</h2><section class="reference"><ul><li>安装Java(8)<ul><li>apt install openjdk-8-jre-headless</li></ul></li><li>配置免密登录<ul><li>ssh-keygen -t rsa</li></ul></li></ul><p><strong><em>注意</em></strong></p><ul><li>.ssh文件挂载<ul><li>Git访问</li><li>Slave访问</li></ul></li><li>Dockerfile<ul><li>将用户加入docker用户组，不然没有Docker访问权限</li></ul></li></ul></section>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;部署&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;#部署&quot;&gt;&lt;/a&gt;部署&lt;/h2&gt;
+&lt;section class=&quot;reference&quot;&gt;&lt;/section&gt;
+&lt;h4 id=&quot;dockerfile&quot;&gt;&lt;a class=&quot;header-ancho
+      
+    
+    </summary>
+    
+    
+      <category term="运维" scheme="http://lockey.xyz/categories/%E8%BF%90%E7%BB%B4/"/>
+    
+      <category term="CI &amp; CD" scheme="http://lockey.xyz/categories/%E8%BF%90%E7%BB%B4/CI-CD/"/>
+    
+    
+      <category term="Jenkins" scheme="http://lockey.xyz/tags/Jenkins/"/>
+    
+  </entry>
   
   <entry>
     <title>Gitbook</title>
@@ -52,21 +82,15 @@ WORKDIR /b
     <link href="http://lockey.xyz/2019/12/05/hello-world/"/>
     <id>http://lockey.xyz/2019/12/05/hello-world/</id>
     <published>2019-12-05T01:59:32.609Z</published>
-    <updated>2019-12-05T09:02:32.642Z</updated>
+    <updated>2019-12-09T01:16:22.100Z</updated>
     
-    <content type="html"><![CDATA[<p>「Lockey 随记」正式出发~！</p>```import os```]]></content>
+    <content type="html"><![CDATA[<p>「Lockey 随记」正式出发~！</p>]]></content>
     
     <summary type="html">
     
       
       
         &lt;p&gt;「Lockey 随记」正式出发~！&lt;/p&gt;
-
-```
-import os
-```
-
-
 
       
     

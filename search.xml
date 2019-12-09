@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>Docker 部署 Jenkins</title>
+      <link href="/2019/12/09/Docker-%E9%83%A8%E7%BD%B2-Jenkins/"/>
+      <url>/2019/12/09/Docker-%E9%83%A8%E7%BD%B2-Jenkins/</url>
+      
+        <content type="html"><![CDATA[<h2 id="部署"><a class="header-anchor" href="#部署"></a>部署</h2><section class="reference"></section><h4 id="dockerfile"><a class="header-anchor" href="#dockerfile"></a>Dockerfile</h4><section class="sample"><pre><code>FROM jenkins/jenkins:ltsMAINTAINER LockeyUSER rootARG dockerGid=999RUN echo &quot;docker:x:${dockerGid}:jenkins&quot; &gt;&gt; /etc/group</code></pre></section><section class="reference"></section><h4 id="构建"><a class="header-anchor" href="#构建"></a>构建</h4><section class="reference"><p><code>docker build . -t myjenkins</code></p></section><h4 id="运行"><a class="header-anchor" href="#运行"></a>运行</h4><section class="reference"><p><code>docker run -d --privileged=true -p 8005:8080 -p 50000:50000 --name myjenkins_1 -v /root/jenkins:/var/jenkins_home -v /root/.ssh:/var/jenkins_home/.ssh -v /var/run/docker.sock:/var/run/docker.sock -v /var/lib/docker:/var/lib/docker -v $(which docker):/usr/bin/docker -v $(which docker-compose):/usr/bin/docker-compose myjenkins</code></p></section><h2 id="slave"><a class="header-anchor" href="#slave"></a>Slave</h2><section class="reference"><ul><li>安装Java(8)<ul><li>apt install openjdk-8-jre-headless</li></ul></li><li>配置免密登录<ul><li>ssh-keygen -t rsa</li></ul></li></ul><p><strong><em>注意</em></strong></p><ul><li>.ssh文件挂载<ul><li>Git访问</li><li>Slave访问</li></ul></li><li>Dockerfile<ul><li>将用户加入docker用户组，不然没有Docker访问权限</li></ul></li></ul></section>]]></content>
+      
+      
+      <categories>
+          
+          <category> 运维 </category>
+          
+          <category> CI &amp; CD </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Jenkins </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Gitbook</title>
       <link href="/2019/12/05/Gitbook/"/>
       <url>/2019/12/05/Gitbook/</url>
@@ -35,7 +62,7 @@
       <link href="/2019/12/05/hello-world/"/>
       <url>/2019/12/05/hello-world/</url>
       
-        <content type="html"><![CDATA[<p>「Lockey 随记」正式出发~！</p>```import os```]]></content>
+        <content type="html"><![CDATA[<p>「Lockey 随记」正式出发~！</p>]]></content>
       
       
       

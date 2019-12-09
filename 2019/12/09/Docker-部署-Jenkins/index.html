@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Lockey</title>
-  <meta name="keywords" content="">
-  <meta name="description" content="Lockey">
+  <title>Docker 部署 Jenkins | Lockey</title>
+  <meta name="keywords" content=" Jenkins ">
+  <meta name="description" content="Docker 部署 Jenkins | Lockey">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="Dockerfile  FROM node WORKDIR &#x2F;build  EXPOSE 4000  RUN npm install gitbook -g; RUN npm install gitbook-cli -g;  WORKDIR &#x2F;build&#x2F;work  RUN gitbook init  CMD [&amp;quot;gitbook&amp;quot;, &amp;quot;serve&amp;quot;]    构">
 <meta name="keywords" content="文档工具">
@@ -52,7 +52,7 @@
 </div>
 
 <body>
-<aside class="nav mobile">
+<aside class="nav">
     <div class="nav-left">
         <a href="/" class="avatar_target">
     <img class="avatar" src="/img/head.jpeg" />
@@ -237,12 +237,70 @@
         </div>
     </div>
 </aside>
-<div class="post index">
+<div class="post">
     <div class="pjax">
-        <article class="index">
-            <div class="toc-ref">
+        <article id="post-Docker-部署-Jenkins" class="article article-type-post" itemscope itemprop="blogPost">
     
+        <h1 class="article-title">Docker 部署 Jenkins</h1>
+    
+    <div class="article-meta">
         
+        
+        
+        <span class="book">
+            
+                <a  data-rel="运维">运维</a>/
+            
+                <a  data-rel="CI &amp; CD">CI &amp; CD</a>
+            
+        </span>
+        
+        
+        <span class="tag">
+            
+            <a class="color3">Jenkins</a>
+            
+        </span>
+        
+    </div>
+    <div class="article-meta">
+        
+        创建时间:<time class="date" title='更新时间: 2019-12-09 09:24:55'>2019-12-09 09:19</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        <span>字数:142</span>
+        
+        
+        <span id="busuanzi_container_page_pv">
+            阅读:<span id="busuanzi_value_page_pv">
+                <span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </span>
+        </span>
+        
+        
+        <span class="top-comment" title="跳转至评论区">
+            <a href="#comments">
+                评论:<span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </a>
+        </span>
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#部署"><span class="toc-text">部署</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#dockerfile"><span class="toc-text">Dockerfile</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#构建"><span class="toc-text">构建</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#运行"><span class="toc-text">运行</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#slave"><span class="toc-text">Slave</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -255,17 +313,86 @@
     }
 </style>
 </div>
-            <pre><code class="language-python">import os
-print(1)
-</code></pre>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="部署"><a class="header-anchor" href="#部署"></a>部署</h2>
+<section class="reference"></section>
+<h4 id="dockerfile"><a class="header-anchor" href="#dockerfile"></a>Dockerfile</h4>
+<section class="sample">
+<pre><code>FROM jenkins/jenkins:lts
 
-        </article>
-        
-        <p>
-            <a  class="dashang" onclick="dashangToggle()">赏</a>
-        </p>
-        
-        
+MAINTAINER Lockey
+
+USER root
+ARG dockerGid=999
+RUN echo &quot;docker:x:${dockerGid}:jenkins&quot; &gt;&gt; /etc/group
+</code></pre>
+</section>
+<section class="reference"></section>
+<h4 id="构建"><a class="header-anchor" href="#构建"></a>构建</h4>
+<section class="reference">
+<p><code>docker build . -t myjenkins</code></p>
+</section>
+<h4 id="运行"><a class="header-anchor" href="#运行"></a>运行</h4>
+<section class="reference">
+<p><code>docker run -d --privileged=true -p 8005:8080 -p 50000:50000 --name myjenkins_1 -v /root/jenkins:/var/jenkins_home -v /root/.ssh:/var/jenkins_home/.ssh -v /var/run/docker.sock:/var/run/docker.sock -v /var/lib/docker:/var/lib/docker -v $(which docker):/usr/bin/docker -v $(which docker-compose):/usr/bin/docker-compose myjenkins</code></p>
+</section>
+<h2 id="slave"><a class="header-anchor" href="#slave"></a>Slave</h2>
+<section class="reference">
+<ul>
+<li>安装Java(8)
+<ul>
+<li>apt install openjdk-8-jre-headless</li>
+</ul>
+</li>
+<li>配置免密登录
+<ul>
+<li>ssh-keygen -t rsa</li>
+</ul>
+</li>
+</ul>
+<p><strong><em>注意</em></strong></p>
+<ul>
+<li>.ssh文件挂载
+<ul>
+<li>Git访问</li>
+<li>Slave访问</li>
+</ul>
+</li>
+<li>Dockerfile
+<ul>
+<li>将用户加入docker用户组，不然没有Docker访问权限</li>
+</ul>
+</li>
+</ul>
+</section>
+
+      
+       <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 196349143@qq.com </span>
+    </div>
+</article>
+
+
+<p>
+    <a  class="dashang" onclick="dashangToggle()">赏</a>
+</p>
+
+
+<div class="article_copyright">
+    <p><span class="copy-title">文章标题:</span>Docker 部署 Jenkins</p>
+    <p><span class="copy-title">文章字数:</span><span class="post-count">142</span></p>
+    <p><span class="copy-title">本文作者:</span><a  title="Lockey">Lockey</a></p>
+    <p><span class="copy-title">发布时间:</span>2019-12-09, 09:19:13</p>
+    <p><span class="copy-title">最后更新:</span>2019-12-09, 09:24:55</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/12/09/Docker-%E9%83%A8%E7%BD%B2-Jenkins/" title="Docker 部署 Jenkins">http://lockey.xyz/2019/12/09/Docker-%E9%83%A8%E7%BD%B2-Jenkins/</a>
+    <p>
+        <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+    </p>
+</div>
+
+
+
     <div id="comments"></div>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
 
@@ -285,6 +412,13 @@ print(1)
         gitalk.render('comments')
     })
 </script>
+
+
+
+
+    
+
+
 
 
     </div>
