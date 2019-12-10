@@ -2,9 +2,37 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.lockey.xyz/2019/12/10/DevOps/%E4%BA%91%E8%AE%A1%E7%AE%97/</loc>
+    
+    <lastmod>2019-12-10T08:19:26.481Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.lockey.xyz/2019/12/09/Docker-%E9%83%A8%E7%BD%B2-Jenkins/</loc>
     
-    <lastmod>2019-12-09T01:26:31.346Z</lastmod>
+    <lastmod>2019-12-09T10:27:49.312Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.lockey.xyz/2019/12/09/DevOps/</loc>
+    
+    <lastmod>2019-12-09T10:08:26.882Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.lockey.xyz/2019/12/09/Ansible/</loc>
+    
+    <lastmod>2019-12-09T10:04:07.011Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.lockey.xyz/2019/12/09/%E5%BC%B9%E6%80%A7%E4%BC%B8%E7%BC%A9/</loc>
+    
+    <lastmod>2019-12-09T09:19:39.836Z</lastmod>
     
   </url>
   
