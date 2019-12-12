@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.lockey.xyz/2019/12/09/DevOps/Ansible/</loc>
+    
+    <lastmod>2019-12-12T10:34:38.783Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.lockey.xyz/2019/12/09/DevOps/DevOps/</loc>
     
     <lastmod>2019-12-11T06:59:24.359Z</lastmod>
@@ -19,13 +26,6 @@
     <loc>http://www.lockey.xyz/2019/12/09/DevOps/Docker-%E9%83%A8%E7%BD%B2-Jenkins/</loc>
     
     <lastmod>2019-12-10T09:15:57.602Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.lockey.xyz/2019/12/09/DevOps/Ansible/</loc>
-    
-    <lastmod>2019-12-10T09:15:57.600Z</lastmod>
     
   </url>
   
