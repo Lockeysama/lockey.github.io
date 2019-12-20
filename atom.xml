@@ -49,9 +49,9 @@
     
       <category term="Kibana" scheme="http://www.lockey.xyz/tags/Kibana/"/>
     
-      <category term="日志" scheme="http://www.lockey.xyz/tags/%E6%97%A5%E5%BF%97/"/>
-    
       <category term="MetricBeat" scheme="http://www.lockey.xyz/tags/MetricBeat/"/>
+    
+      <category term="日志" scheme="http://www.lockey.xyz/tags/%E6%97%A5%E5%BF%97/"/>
     
   </entry>
   
