@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.lockey.xyz/2019/12/20/DevOps/ELK/</loc>
+    
+    <lastmod>2019-12-20T03:30:21.339Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.lockey.xyz/categories/index.html</loc>
     
     <lastmod>2019-12-19T10:01:43.029Z</lastmod>
@@ -12,13 +19,6 @@
     <loc>http://www.lockey.xyz/tags/index.html</loc>
     
     <lastmod>2019-12-19T10:01:14.355Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.lockey.xyz/ELK/index.html</loc>
-    
-    <lastmod>2019-12-19T08:17:26.955Z</lastmod>
     
   </url>
   
