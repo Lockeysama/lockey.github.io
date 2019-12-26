@@ -34,7 +34,7 @@
 <meta property="og:site_name" content="Lockey">
 <meta property="og:description" content="ELK 是什么?   是 ElasticSearch、Logstash、Kibana 三个开源软件的组合 具备数据收集、存储、分析功能 适合实时数据分析和检索的场景 具有分布式特性 易扩展   ELK 功能   ElasticSearch  存储 索引   Logstash  收集 处理   Kibana  可视化 统计分析   Beat（扩展组件）  MetricBeat  收集各种主机信息（C">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-12-20T03:59:56.527Z">
+<meta property="og:updated_time" content="2019-12-26T02:00:08.478Z">
 <meta name="twitter:card" content="summary">
     
         <link rel="alternate" type="application/atom+xml" title="Lockey" href="/atom.xml">
@@ -262,7 +262,14 @@
 </section>
 <h4 id="使用-docker-安装-metricbeat"><a class="header-anchor" href="#使用-docker-安装-metricbeat"></a>使用 Docker 安装 MetricBeat</h4>
 <section class="sample">
-<p><code>$ vim docker-compose.yml</code></p>
+<p><strong><em>获取配置文件</em></strong></p>
+<ul>
+<li>下载 <code>$ wget https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-7.4.1-linux-x86_64.tar.gz</code></li>
+<li>解压 <code>$ tar zxvf metricbeat-7.4.1-linux-x86_64.tar.gz</code></li>
+<li>提取 <code>metricbeat.yml modules.d</code></li>
+</ul>
+<p><strong><em>使用 Docker Compose</em></strong><br>
+<code>$ vim docker-compose.yml</code></p>
 <pre><code class="language-yml">version: '2'
 
 services:
@@ -279,18 +286,12 @@ services:
       - ./metricbeat/modules.d:/usr/share/metricbeat/modules.d:ro
       -  /usr/share/zoneinfo/Asia/Shanghai:/etc/localtime:ro
     user: &quot;root&quot;
-    networks:
-      - docker-elk_elk
     command: -system.hostfs=/hostfs -e
     restart: always
-
-networks:
-  docker-elk_elk:
-    external: true
 </code></pre>
 </section>
 <section class="reference">
-<script src="https://cdn.bootcss.com/raphael/2.3.0/raphael.min.js"></script><script src="https://cdn.bootcss.com/flowchart/1.12.2/flowchart.min.js"></script><textarea id="flowchart-0-code" style="display: none">op0=>operation: Data（Log）
+<p><code>docker exec -it metricbeat metricbeat modules enable system</code><script src="https://cdn.bootcss.com/raphael/2.3.0/raphael.min.js"></script><script src="https://cdn.bootcss.com/flowchart/1.12.2/flowchart.min.js"></script><textarea id="flowchart-0-code" style="display: none">op0=>operation: Data（Log）
 op1=>operation: MetricBeat
 op2=>operation: Redis
 op3=>operation: Logstash
@@ -301,7 +302,8 @@ op0(right)->op2
 op1(right)->op4
 op2(right)->op3
 op3(right)->op4
-op4(right)->op5</textarea><textarea id="flowchart-0-options" style="display: none">{"scale":1,"line-width":2,"line-length":50,"text-margin":10,"font-size":12}</textarea><script>  var code = document.getElementById("flowchart-0-code").value;  var options = JSON.parse(decodeURIComponent(document.getElementById("flowchart-0-options").value));  var diagram = flowchart.parse(code);  diagram.drawSVG("flowchart-0", options);</script></section>
+op4(right)->op5</textarea><textarea id="flowchart-0-options" style="display: none">{"scale":1,"line-width":2,"line-length":50,"text-margin":10,"font-size":12}</textarea><script>  var code = document.getElementById("flowchart-0-code").value;  var options = JSON.parse(decodeURIComponent(document.getElementById("flowchart-0-options").value));  var diagram = flowchart.parse(code);  diagram.drawSVG("flowchart-0", options);</script></p>
+</section>
 
         </div>
 
@@ -310,7 +312,7 @@ op4(right)->op5</textarea><textarea id="flowchart-0-options" style="display: non
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2019-12-20T03:59:56.527Z" itemprop="dateUpdated">2019-12-20 11:59:56</time>
+    最后更新时间：<time datetime="2019-12-26T02:00:08.478Z" itemprop="dateUpdated">2019-12-26 10:00:08</time>
 </span><br>
 
 
