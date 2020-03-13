@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+<!-- Baidu Tongji -->
+<script>var _hmt = _hmt || []</script>
+<script async src="//hm.baidu.com/hm.js?493a2f87364df67d7b0018c29a2cde1a"></script>
+<!-- End Baidu Tongji -->
+
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>K8S | Lockey</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="K8S,Kubernetes,编排">
+    <meta name="description" content="部署的演化历史   传统部署  资源分配问题   虚拟化部署  量级较重   容器化部署  敏捷应用程序的创建和部署 持续开发、集成和部署方便 开发运维分离 可观察性丰富 跨开发、测试和生产环境一致 云和操作系统分发的可移植性强 以应用程序为中心管理 适合松散耦合、分布式、弹性、解放的微服务 资源隔离 资源利用率高">
+<meta name="keywords" content="K8S,Kubernetes,编排">
+<meta property="og:type" content="article">
+<meta property="og:title" content="K8S">
+<meta property="og:url" content="http:&#x2F;&#x2F;www.lockey.xyz&#x2F;2019&#x2F;12&#x2F;31&#x2F;DevOps&#x2F;K8S&#x2F;index.html">
+<meta property="og:site_name" content="Lockey">
+<meta property="og:description" content="部署的演化历史   传统部署  资源分配问题   虚拟化部署  量级较重   容器化部署  敏捷应用程序的创建和部署 持续开发、集成和部署方便 开发运维分离 可观察性丰富 跨开发、测试和生产环境一致 云和操作系统分发的可移植性强 以应用程序为中心管理 适合松散耦合、分布式、弹性、解放的微服务 资源隔离 资源利用率高">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http:&#x2F;&#x2F;www.lockey.xyz&#x2F;2019&#x2F;12&#x2F;31&#x2F;DevOps&#x2F;K8S&#x2F;部署演进历史.svg">
+<meta property="og:image" content="http:&#x2F;&#x2F;www.lockey.xyz&#x2F;2019&#x2F;12&#x2F;31&#x2F;DevOps&#x2F;K8S&#x2F;k8s架构图.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;www.lockey.xyz&#x2F;2019&#x2F;12&#x2F;31&#x2F;DevOps&#x2F;K8S&#x2F;Master.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;www.lockey.xyz&#x2F;2019&#x2F;12&#x2F;31&#x2F;DevOps&#x2F;K8S&#x2F;Node.png">
+<meta property="og:updated_time" content="2020-01-06T03:21:46.772Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http:&#x2F;&#x2F;www.lockey.xyz&#x2F;2019&#x2F;12&#x2F;31&#x2F;DevOps&#x2F;K8S&#x2F;部署演进历史.svg">
+    
+        <link rel="alternate" type="application/atom+xml" title="Lockey" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off" target="">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Lockey</h5>
+          <a href="mailto:196349143@qq.com" target="_blank" rel="noopener" title="196349143@qq.com" class="mail">196349143@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/Lockeysama" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" target="_blank" rel="noopener" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">K8S</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" target="_blank" rel="noopener" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search" target="">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare" target="">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">K8S</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-12-31T06:33:19.000Z" itemprop="datePublished" class="page-time">
+  2019-12-31
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/DevOps/">DevOps</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#部署的演化历史"><span class="post-toc-number">1.</span> <span class="post-toc-text">部署的演化历史</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#容器部署时代面临的问题"><span class="post-toc-number">2.</span> <span class="post-toc-text">容器部署时代面临的问题</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#问题"><span class="post-toc-number">2.0.0.1.</span> <span class="post-toc-text">问题</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#解决方向"><span class="post-toc-number">2.0.0.2.</span> <span class="post-toc-text">解决方向</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#解决方案"><span class="post-toc-number">2.0.0.3.</span> <span class="post-toc-text">解决方案</span></a></li></ol></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#k8s是什么？"><span class="post-toc-number">3.</span> <span class="post-toc-text">K8S是什么？</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#特点"><span class="post-toc-number">3.0.0.1.</span> <span class="post-toc-text">特点</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#作用"><span class="post-toc-number">3.0.0.2.</span> <span class="post-toc-text">作用</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#其它意义"><span class="post-toc-number">3.0.0.3.</span> <span class="post-toc-text">其它意义</span></a></li></ol></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#架构"><span class="post-toc-number">4.</span> <span class="post-toc-text">架构</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#组件"><span class="post-toc-number">5.</span> <span class="post-toc-text">组件</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#设计理念"><span class="post-toc-number">6.</span> <span class="post-toc-text">设计理念</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#api-设计原则"><span class="post-toc-number">6.0.0.1.</span> <span class="post-toc-text">API 设计原则</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#控制机制设计原则"><span class="post-toc-number">6.0.0.2.</span> <span class="post-toc-text">控制机制设计原则</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#核心技术概念"><span class="post-toc-number">6.0.0.3.</span> <span class="post-toc-text">核心技术概念</span></a></li></ol></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#kubernetes-对象管理"><span class="post-toc-number">7.</span> <span class="post-toc-text">Kubernetes 对象管理</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#使用"><span class="post-toc-number">8.</span> <span class="post-toc-text">使用</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#安装"><span class="post-toc-number">8.0.0.1.</span> <span class="post-toc-text">安装</span></a></li></ol></li></ol></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-DevOps/K8S"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">K8S</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-12-31 14:33:19" datetime="2019-12-31T06:33:19.000Z"  itemprop="datePublished">2019-12-31</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/DevOps/">DevOps</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="部署的演化历史"><a class="header-anchor" href="#部署的演化历史"></a>部署的演化历史</h2>
+<section class="reference">
+<ul>
+<li>传统部署
+<ul>
+<li>资源分配问题</li>
+</ul>
+</li>
+<li>虚拟化部署
+<ul>
+<li>量级较重</li>
+</ul>
+</li>
+<li>容器化部署
+<ul>
+<li>敏捷应用程序的创建和部署</li>
+<li>持续开发、集成和部署方便</li>
+<li>开发运维分离</li>
+<li>可观察性丰富</li>
+<li>跨开发、测试和生产环境一致</li>
+<li>云和操作系统分发的可移植性强</li>
+<li>以应用程序为中心管理</li>
+<li>适合松散耦合、分布式、弹性、解放的微服务</li>
+<li>资源隔离</li>
+<li>资源利用率高</li>
+</ul>
+</li>
+</ul>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="部署演进历史.svg" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+</section>
+<h2 id="容器部署时代面临的问题"><a class="header-anchor" href="#容器部署时代面临的问题"></a>容器部署时代面临的问题</h2>
+<section class="reference"></section>
+<h5 id="问题"><a class="header-anchor" href="#问题"></a>问题</h5>
+<section class="reference">
+<ul>
+<li>服务集群越来越大</li>
+<li>传统的集群容器部署方式较繁琐</li>
+<li>工作量日益加大</li>
+<li>容易出错</li>
+</ul>
+</section>
+<h5 id="解决方向"><a class="header-anchor" href="#解决方向"></a>解决方向</h5>
+<section class="reference">
+<p>需要一个强大的容器管理、编排系统</p>
+</section>
+<h5 id="解决方案"><a class="header-anchor" href="#解决方案"></a>解决方案</h5>
+<section class="reference">
+<p>kubernetes[K8S]</p>
+</section>
+<h2 id="k8s是什么？"><a class="header-anchor" href="#k8s是什么？"></a>K8S是什么？</h2>
+<section class="reference"></section>
+<h5 id="特点"><a class="header-anchor" href="#特点"></a>特点</h5>
+<section class="reference">
+<ul>
+<li>可移植</li>
+<li>可扩展</li>
+<li>开源</li>
+<li>生态系统庞大且有活力</li>
+</ul>
+</section>
+<h5 id="作用"><a class="header-anchor" href="#作用"></a>作用</h5>
+<section class="reference">
+<ul>
+<li>服务发现和负载均衡</li>
+<li>存储编排</li>
+<li>自动部署和回滚</li>
+<li>自动二进制打包</li>
+<li>自我修复</li>
+<li>秘钥与配置管理</li>
+</ul>
+</section>
+<h5 id="其它意义"><a class="header-anchor" href="#其它意义"></a>其它意义</h5>
+<section class="reference">
+<ul>
+<li>促进声明式配置</li>
+<li>自动化</li>
+</ul>
+</section>
+<h2 id="架构"><a class="header-anchor" href="#架构"></a>架构</h2>
+<section class="reference">
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="k8s架构图.png" alt="架构图" title="">
+                </div>
+                <div class="image-caption">架构图</div>
+            </figure>
+</section>
+<h2 id="组件"><a class="header-anchor" href="#组件"></a>组件</h2>
+<section class="reference">
+<ul>
+<li>Master【集群控制平面】
+<ul>
+<li>kube-apiservice
+<ul>
+<li>主节点上负责提供 Kubernetes API 服务的组件</li>
+<li>支持<a href="https://kubernetes.io/zh/docs/setup/production-environment/tools/kubeadm/high-availability/" target="_blank" rel="noopener">水平扩缩</a></li>
+</ul>
+</li>
+<li><a href="https://github.com/etcd-io/etcd/blob/master/Documentation/docs.md" target="_blank" rel="noopener">etcd</a>
+<ul>
+<li>作为保存 Kubernetes 所有集群数据的后台数据库</li>
+<li>兼具一致性和高可用性的键值数据库</li>
+<li>通常需要有个备份计划</li>
+</ul>
+</li>
+<li>kube-scheduler
+<ul>
+<li>监视新创建的未指定运行节点的 Pod</li>
+<li>选择节点让 Pod 在上面运行</li>
+</ul>
+</li>
+<li>kube-controller-manager
+<ul>
+<li>Node Controller
+<ul>
+<li>负责在节点故障时进行通知和响应</li>
+</ul>
+</li>
+<li>Replication Controller（RC）
+<ul>
+<li>负责为系统中每个副本控制器对象维护正确数量的 Pod</li>
+</ul>
+</li>
+<li>Endpoints Controller
+<ul>
+<li>填充端点（Endpoints）对象（即加入 Service 与 Pod）</li>
+</ul>
+</li>
+<li>Service Account &amp; Token Controllers
+<ul>
+<li>为新的命名空间创建默认账户和 API 访问令牌</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>cloud-controller-manager
+<ul>
+<li>运行与基础云提供商交互的控制器</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="Master.png" alt="Master"></p>
+<ul>
+<li>Node【维护运行的 Pod 并提供 Kubernetes 运行环境】
+<ul>
+<li>kubelet
+<ul>
+<li>保证容器都运行在 Pod 中</li>
+<li>接收一组通过各类机制提供给它的 PodSpecs，确保 PodSpecs 中描述的容器处于运行状态且健康</li>
+<li>不会管理不是由 Kubernetes 创建的容器</li>
+</ul>
+</li>
+<li>kube-proxy
+<ul>
+<li>是集群中每个节点上运行的网络代理，实现 Kubernetes Service 概念的一部分</li>
+<li>维护节点上的网络规则
+<ul>
+<li>允许从集群内部或外部网络会话与 Pod 进行网络通信</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>容器运行环境（Docker 等）
+<ul>
+<li>负责运行容器</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="https://kubernetes.io/zh/docs/concepts/cluster-administration/addons/" target="_blank" rel="noopener">Addons</a>【使用 Kubernetes 资源 (DaemonSet, Deployment等) 实现集群功能；命名空间为：kube-system】
+<ul>
+<li>DNS
+<ul>
+<li>所有 Kubernetes 集群都应具有 DNS (非强制性要求)</li>
+<li>为 Kubernetes 集群提供 DNS 记录</li>
+<li>Kubernetes 启动的容器自动将 DNS 服务器包含在 DNS 搜索中</li>
+</ul>
+</li>
+<li>Dashboard
+<ul>
+<li><a href="https://kubernetes.io/zh/docs/tasks/access-application-cluster/web-ui-dashboard/" target="_blank" rel="noopener">Web UI</a></li>
+<li>使用户可以管理集群中运行的应用程序以及集群本身进行故障排除</li>
+</ul>
+</li>
+<li>容器资源监控
+<ul>
+<li>将关于容器的一些常见的时间序列度量值保存到一个集群数据库中</li>
+<li>提供用于浏览这些数据的界面</li>
+</ul>
+</li>
+<li>集群层面日志
+<ul>
+<li>负责将容器的日志保存到一个集中的日志存储中</li>
+<li>提供搜索和浏览接口</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="Node.png" alt="Node" title="">
+                </div>
+                <div class="image-caption">Node</div>
+            </figure>
+<p><strong><em>其他组件</em></strong></p>
+<ul>
+<li><a href="https://kubernetes.io/zh/docs/reference/kubectl/overview/" target="_blank" rel="noopener">kubectl</a>【操控 Kubernetes 集群】
+<ul>
+<li>负责管理 Pods 和它们上面的容器，镜像、volumes、etc</li>
+</ul>
+</li>
+</ul>
+</section>
+<h2 id="设计理念"><a class="header-anchor" href="#设计理念"></a>设计理念</h2>
+<section class="reference">
+<div class="info">
+<p>核心理念：</p>
+<ol>
+<li>容错性</li>
+<li>扩展性</li>
+</ol>
+</div>
+</section>
+<h5 id="api-设计原则"><a class="header-anchor" href="#api-设计原则"></a>API 设计原则</h5>
+<section class="reference">
+<ol>
+<li>所有 API 应该是声明式的</li>
+<li>AIP 对象是彼此互补且可组合的</li>
+<li>高层 API 以操作意图为基础设计</li>
+<li>底层 API 根据高层 API 的控制需要设计</li>
+<li>尽量避免简单封装，不要有在外部 API 无法显式知道的内部隐藏机制</li>
+<li>API 操作复杂度与对象数量成正比</li>
+<li>API 对象状态不能依赖于网络连接状态</li>
+<li>尽量避免让操作机制依赖于全局状态</li>
+</ol>
+</section>
+<h5 id="控制机制设计原则"><a class="header-anchor" href="#控制机制设计原则"></a>控制机制设计原则</h5>
+<section class="reference">
+<ol>
+<li>控制逻辑应该只依赖于当前状态</li>
+<li>假设任何错误的可能，并做容错处理</li>
+<li>尽量避免复杂状态机，控制逻辑不要依赖无法监控的内部状态</li>
+<li>假设任何操作都可能被任何操作对象拒绝，甚至被错误解析</li>
+<li>每个模块都可以在出错后自动恢复</li>
+<li>每个模块都可以在必要的时候优雅的降级服务</li>
+</ol>
+</section>
+<h5 id="核心技术概念"><a class="header-anchor" href="#核心技术概念"></a>核心技术概念</h5>
+<section class="reference">
+<table>
+<thead>
+<tr>
+<th>术语</th>
+<th>语义</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pod</td>
+<td>集群中部署应用或服务的最小单元，可以包含多个容器</td>
+<td></td>
+</tr>
+<tr>
+<td>副本集（Replica Set，RS）</td>
+<td>新一代 RC，支持更多匹配模式</td>
+<td></td>
+</tr>
+<tr>
+<td>部署（Deployment）</td>
+<td>表示用户对集群的一次更新操作</td>
+<td></td>
+</tr>
+<tr>
+<td>服务（Service）</td>
+<td>客户端要访问的服务就是 Service 对象</td>
+<td>每个 Service 会对应一个集群内部的虚拟 IP，集群内部通过虚拟 IP 访问服务</td>
+</tr>
+<tr>
+<td>任务（Job）</td>
+<td>控制批处理型任务的对象</td>
+<td></td>
+</tr>
+<tr>
+<td>后台支撑服务集（DaemonSet）</td>
+<td>保证每个节点都有此类 Pod 运行</td>
+<td>典型的支持服务有：存储、日志、监控等</td>
+</tr>
+<tr>
+<td>有状态服务集（PetSet）</td>
+<td>每个 Pod 的名字要事先确定，挂载自己独立的存储</td>
+<td>适合 PetSet 的业务：MySQL、PostgreSQL、Zookeeper等</td>
+</tr>
+<tr>
+<td>集群联邦（Federation）</td>
+<td>提供扩区域跨服务商能力</td>
+<td>每个 Federation 有自己的分布式存储、API Server 和 Controller Manager</td>
+</tr>
+<tr>
+<td>存储卷（Volume）</td>
+<td>与 Docker 存储卷类似，不过作用访问是 Pod</td>
+<td></td>
+</tr>
+<tr>
+<td>持久存储卷（Persistent Volume，PV）和持久存储卷声明（Persistent Volume Claim，PVC）</td>
+<td>使集群具备存储的逻辑抽象能力</td>
+<td>PV 和 PVC 的关系相当于 Node 和 Pod 的关系</td>
+</tr>
+<tr>
+<td>名称（Names）</td>
+<td>Kubernetes REST API 中的所有对象都由名称和 UID 明确标识；一次只能有一个给定类型的对象具有给定的名称（如果删除对象，则可以创建同名的新对象）</td>
+<td></td>
+</tr>
+<tr>
+<td>UIDs</td>
+<td>系统生成的字符串，唯一标识对象；在集群的整个生命周期中创建的每一个对象都有一个不同的 UID，用来区分类似实体的历史事件</td>
+<td></td>
+</tr>
+<tr>
+<td>命名空间（Namespace）</td>
+<td>Kubernetes 支持多个虚拟集群，依赖于同一物理集群。这些虚拟集群被称为命名空间。</td>
+<td></td>
+</tr>
+<tr>
+<td>标签和选择器（Labels &amp; Selectors）</td>
+<td>标签是附加到 Kubernetes 对象上的键值对，用于指定对用户有意义且相关的对象标识属性，但不直接对核心系统有语义含义</td>
+<td>每个对象都可以定义一组键/值标签，每个键对于给定对象必须唯一</td>
+</tr>
+<tr>
+<td>注解（Annotations）</td>
+<td>可以使用注解为对象附加任意的非标识的元数据</td>
+<td></td>
+</tr>
+<tr>
+<td>字段选择器（Field Selectors）</td>
+<td>允许根据多个或多个资源字段的值筛选 Kubernetes 资源</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="kubernetes-对象管理"><a class="header-anchor" href="#kubernetes-对象管理"></a>Kubernetes 对象管理</h2>
+<section class="reference">
+<div class="warning">
+<p>应该只使用一种技术来管理 Kubernetes 对象；混合和匹配技术作用于同一对象上将导致未定义行为</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>使用环境</th>
+<th>优点</th>
+<th>缺点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>命令式命令</td>
+<td>测试</td>
+<td>1. 命令简单，易学、易记；</br>2. 快速更改集群</td>
+<td>1. 命令不与变更审查流程集成；<br>2. 不提供与更改管理的审核跟踪；<br>3.除了实时内容，命令不提供记录源；<br>4. 不提供用于创建新对象的模板</td>
+</tr>
+<tr>
+<td>命令式对象配置</td>
+<td>生产</td>
+<td>与命令式命令相比：<br>1. 可以存储在源控制系统中，如：Git；<br>2. 可以与流程集成，如：在推送和审计之前检查更新；<br>3.提供用于创建新对象的模板；<br><br>与声明式对象配置相比：<br>1. 配置行为简单易懂；<br>2. 更加成熟</td>
+<td>与命令式命令相比：<br>1. 需要对对象架构有了解；<br>2. 需要些 YAML 文件；<br><br>与声明式对象配置相比：<br>1. 对活动对象的更新必须反映在配置文件中，否则将在下一次替换时丢失；<br>2. 针对文件而不是目录</td>
+</tr>
+<tr>
+<td>声明式对象配置</td>
+<td>生产</td>
+<td>1. 即使未将对活动对象所做的更改未合并回配置文件中，也将保留这些更改；<br>2. 更好的支持对目录进行操作并自动检测每个对象的操作类型（创建、修补、删除）</td>
+<td>1. 配置难于调试并且出现异常时难以理解；<br>2. 使用差异的部分更新会创建复杂的合并和补丁操作</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="使用"><a class="header-anchor" href="#使用"></a>使用</h2>
+<section class="reference"></section>
+<h5 id="安装"><a class="header-anchor" href="#安装"></a>安装</h5>
+<section class="sample">
+<pre><code>cat &lt;&lt;EOF &gt; /etc/apt/sources.list.d/kubernetes.list
+deb http://mirrors.ustc.edu.cn/kubernetes/apt kubernetes-xenial main
+EOF
+
+apt-get update
+apt-get install -y kubelet kubeadm kubectl
+apt-mark hold kubelet kubeadm kubectl
+</code></pre>
+</section>
+<section class="reference">
+<p><strong><em>参考资料</em></strong><br>
+<a href="https://kubernetes.io/zh/docs/concepts/" target="_blank" rel="noopener">K8S(官方)</a><br>
+<a href="http://docs.kubernetes.org.cn/" target="_blank" rel="noopener">Kubernetes 中文社区 | 中文文档</a><br>
+<a href="https://www.kubernetes.org.cn/docs" target="_blank" rel="noopener">Kubernetes 中文手册</a></p>
+</section>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2020-01-06T03:21:46.772Z" itemprop="dateUpdated">2020-01-06 11:21:46</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/2019/12/31/DevOps/K8S/" target="_blank" rel="external">http://www.lockey.xyz/2019/12/31/DevOps/K8S/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://www.lockey.xyz">
+            <img src="/img/avatar.jpg" alt="Lockey">
+            Lockey
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light" target="">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/K8S/" rel="tag">K8S</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Kubernetes/" rel="tag">Kubernetes</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%BC%96%E6%8E%92/" rel="tag">编排</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.lockey.xyz/2019/12/31/DevOps/K8S/&title=《K8S》 — Lockey&pic=http://www.lockey.xyz/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" target="_blank" rel="noopener" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.lockey.xyz/2019/12/31/DevOps/K8S/&title=《K8S》 — Lockey&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.lockey.xyz/2019/12/31/DevOps/K8S/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《K8S》 — Lockey&url=http://www.lockey.xyz/2019/12/31/DevOps/K8S/&via=http://www.lockey.xyz" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.lockey.xyz/2019/12/31/DevOps/K8S/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" target="" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2020/03/11/DevOps/%E9%AB%98%E5%8F%AF%E7%94%A8K8S%E6%90%AD%E5%BB%BA/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">高可用K8S搭建（Ubuntu18.04）</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2019/12/20/DevOps/ELK/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">ELK</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="comments" id="comments">
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+        var id = location.pathname
+        if (location.pathname.length > 50) {
+          id = location.pathname.replace(/\/\d+\/\d+\/\d+\//, '').replace('/', '').substring(0, 50)
+        }
+        const gitalk = new Gitalk({
+          clientID: 'd3fa7d2ac1b4bf641e09',
+          clientSecret: '9b3c0342a36274f142db4652376ea42260ed4766',
+          repo: 'lockey.github.io',
+          owner: 'Lockeysama',
+          admin: ['Lockeysama'],
+          id: id,      // Ensure uniqueness and length less than 50
+          title: document.title.split('|')[0],
+          distractionFreeMode: false  // Facebook-like distraction free mode
+        })
+
+        gitalk.render('gitalk-container')
+    </script>
+</section>
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;" target=""><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Lockey &copy; 2019 - 2020</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" target="" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.lockey.xyz/2019/12/31/DevOps/K8S/&title=《K8S》 — Lockey&pic=http://www.lockey.xyz/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" target="_blank" rel="noopener" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.lockey.xyz/2019/12/31/DevOps/K8S/&title=《K8S》 — Lockey&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.lockey.xyz/2019/12/31/DevOps/K8S/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《K8S》 — Lockey&url=http://www.lockey.xyz/2019/12/31/DevOps/K8S/&via=http://www.lockey.xyz" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.lockey.xyz/2019/12/31/DevOps/K8S/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;" target="_blank" rel="noopener"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACLUlEQVR42u3aS5KDMAwFwLn/pZkDpCBPElkgmlUq5XLcLBTr8/cXP8fHM1l5tibZf/RgYGA8lnFcPmc/cPb5c+frX8lhX14QBgbGCxjJISYH6gXc5GwYGBgYZ2vyK131woeBgYFxb8BNVl6T5pdODAyM9zCSC9+kKNZLUH+Si2NgYDyQMbmu/frzT/obGBgYj2IcxScPpr1webQeDAyM3Yw8wCU/n+zWTFCT82BgYCxlXAfKpN1YTVB77Ycv32NgYLyA0SuWVS+IvVZB1EbFwMBYzZhf5q5Dap7EJq+gUBHEwMBYx0gOlI9fJM3O+avBwMB4JyO5fuUDGcmx8pfVDLsYGBgrGL3pjGqRrtqqzHcr5+IYGBiLGPmIQ+/y13tx5cYABgbGCsak9J+nu5NCXjXNxsDA2MeYD1JMUtZeWnvavMTAwFjNSDZtRvE4WE9aERgYGLsZ1cR1Moraw+SDIBgYGFsZ1XA5KfH30too0GNgYKxmVLfLS3J5AtwL8eXhMAwMjIczqoe7twFQblImtUMMDIyljDwg9i6O+XBGb2cMDIw3MO5NZZPyWW9cbDQtgoGB8UBGrxmQJ5nz1DdiY2BgrGZUw1yOrBbg8gGL6p8EBgbGDkb1cJNRsB8GXAwMjBcw8oL+XRfH3j/A6c4YGBgY8XjWfGUSXk+LbhgYGBjFa1wecCcpNAYGxnsY1Qtf3gboJb3llRgYGKsZ1RGHfIysGkCrYxYYGBgvYPwDES10ctqIlvsAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+lazyScripts.push('//s95.cnzz.com/z_stat.php?id=1278306875&web_id=1278306875')
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '(～﹃～)~zZ';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '_(:з」∠)_';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>
