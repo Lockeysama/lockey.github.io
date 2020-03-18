@@ -26,14 +26,14 @@
     
     
     <meta name="keywords" content="">
-    <meta name="description" content="未完  v2使用https，登录不上，docker daemon 增加 insecure registries “insecure-registries” : [“harbor-register.entertech.cn”] systemctl daemon-reload systemctl restart docker">
+    <meta name="description" content="简介   官方  Harbor是一个开源的容器镜像管理系统，它通过基于角色的访问控制来保护镜像，扫描镜像中的漏洞，并将图像签名为可信的。作为一个CNCF孵化项目，Harbor 为您提供了合规性、性能和互操作性，帮助您跨云原生计算平台(如 Kubernetes 和 Docker )一致而安全地管理镜像。   非官方  开源 企业级容器镜像管理系统 成熟 生态健全 使用的大厂众多 搭配在集群内部，加速">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Docker 开源仓库系统 Harbor 搭建与使用">
 <meta property="og:url" content="http:&#x2F;&#x2F;www.lockey.xyz&#x2F;2020&#x2F;03&#x2F;12&#x2F;Linux&#x2F;Docker%E5%BC%80%E6%BA%90%E4%BB%93%E5%BA%93%E7%B3%BB%E7%BB%9FHarbor%E6%90%AD%E5%BB%BA%E4%B8%8E%E4%BD%BF%E7%94%A8&#x2F;index.html">
 <meta property="og:site_name" content="Lockey">
-<meta property="og:description" content="未完  v2使用https，登录不上，docker daemon 增加 insecure registries “insecure-registries” : [“harbor-register.entertech.cn”] systemctl daemon-reload systemctl restart docker">
+<meta property="og:description" content="简介   官方  Harbor是一个开源的容器镜像管理系统，它通过基于角色的访问控制来保护镜像，扫描镜像中的漏洞，并将图像签名为可信的。作为一个CNCF孵化项目，Harbor 为您提供了合规性、性能和互操作性，帮助您跨云原生计算平台(如 Kubernetes 和 Docker )一致而安全地管理镜像。   非官方  开源 企业级容器镜像管理系统 成熟 生态健全 使用的大厂众多 搭配在集群内部，加速">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-03-13T08:08:35.425Z">
+<meta property="og:updated_time" content="2020-03-18T04:29:56.240Z">
 <meta name="twitter:card" content="summary">
     
         <link rel="alternate" type="application/atom+xml" title="Lockey" href="/atom.xml">
@@ -160,7 +160,7 @@
     <aside class="post-widget">
         <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#未完"><span class="post-toc-number">1.</span> <span class="post-toc-text">未完</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#简介"><span class="post-toc-number">1.</span> <span class="post-toc-text">简介</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#环境"><span class="post-toc-number">2.</span> <span class="post-toc-text">环境</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#安装"><span class="post-toc-number">3.</span> <span class="post-toc-text">安装</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#使用"><span class="post-toc-number">4.</span> <span class="post-toc-text">使用</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#注意事项"><span class="post-toc-number">5.</span> <span class="post-toc-text">注意事项</span></a></li></ol>
         </nav>
     </aside>
 
@@ -184,12 +184,82 @@
 
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
-            <h2 id="未完"><a class="header-anchor" href="#未完"></a>未完</h2>
+            <h2 id="简介"><a class="header-anchor" href="#简介"></a>简介</h2>
 <section class="reference">
-<p>v2使用https，登录不上，docker daemon 增加 insecure registries</p>
-<p>“insecure-registries” : [“<a href="http://harbor-register.entertech.cn" target="_blank" rel="noopener">harbor-register.entertech.cn</a>”]</p>
-<p>systemctl daemon-reload</p>
-<p>systemctl restart docker</p>
+<ul>
+<li>官方
+<ul>
+<li><a href="https://goharbor.io/" target="_blank" rel="noopener">Harbor</a>是一个开源的容器镜像管理系统，它通过基于角色的访问控制来保护镜像，扫描镜像中的漏洞，并将图像签名为可信的。作为一个CNCF孵化项目，Harbor 为您提供了合规性、性能和互操作性，帮助您跨云原生计算平台(如 Kubernetes 和 Docker )一致而安全地管理镜像。</li>
+</ul>
+</li>
+<li>非官方
+<ul>
+<li>开源</li>
+<li>企业级容器镜像管理系统</li>
+<li>成熟</li>
+<li>生态健全</li>
+<li>使用的大厂众多</li>
+<li>搭配在集群内部，加速集群创建、升级</li>
+</ul>
+</li>
+</ul>
+</section>
+<h2 id="环境"><a class="header-anchor" href="#环境"></a>环境</h2>
+<section class="reference">
+<p>操作系统：Linux(Ubuntu18.04)<br>
+容器管理：Docker + Docker-Compose</p>
+</section>
+<h2 id="安装"><a class="header-anchor" href="#安装"></a>安装</h2>
+<section class="reference">
+<ol>
+<li><a href="https://github.com/goharbor/harbor/releases" target="_blank" rel="noopener">下载安装包</a></li>
+<li>解压并进入安装包</li>
+<li>修改<code>harbor.yml</code>配置（hostname、harbor_admin_password等）</li>
+<li>修改<code>docker-compose.yml</code>（如需要修改镜像源等，有条件可以略过）</li>
+<li>使用 docker-compose 启动 Harbor</li>
+</ol>
+</section>
+<h2 id="使用"><a class="header-anchor" href="#使用"></a>使用</h2>
+<section class="reference">
+<ul>
+<li>命令行操作与 <a href="https://docs.docker.com/get-started/part3/" target="_blank" rel="noopener">DockerHUB</a> 基本一致</li>
+<li>浏览器
+<ul>
+<li>修改 /etc/hosts 文件，设置目标主机IP和 harbor.yml 中设置的 hostname</li>
+<li>使用默认用户名 admin 和 harbor.yml 中设置的密码登录</li>
+</ul>
+</li>
+</ul>
+</section>
+<h2 id="注意事项"><a class="header-anchor" href="#注意事项"></a>注意事项</h2>
+<section class="sample">
+<ul>
+<li>使用私有仓库时：
+<ul>
+<li>首先需要在 Docker 客户机上登录（$<code>docker login &lt;hostname&gt;</code>）
+<ul>
+<li>新版本使用 https，如登录不上：
+<ul>
+<li>修改 daemon.json 增加 insecure registries（见下面示例 ↓）</li>
+<li>重启 docker 服务</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong><em>Docker daemon.json 增加 insecure registries</em></strong></p>
+<pre><code>vim /etc/docker/daemon.json
+---
+{
+  &quot;registry-mirrors&quot;: [&quot;https://xxx.mirror.aliyuncs.com&quot;],
+  &quot;insecure-registries&quot; : [&quot;&lt;harbor hostname&gt;&quot;]
+}
+---
+systemctl daemon-reload
+systemctl restart docker
+</code></pre>
 </section>
 
         </div>
@@ -199,7 +269,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2020-03-13T08:08:35.425Z" itemprop="dateUpdated">2020-03-13 16:08:35</time>
+    最后更新时间：<time datetime="2020-03-18T04:29:56.240Z" itemprop="dateUpdated">2020-03-18 12:29:56</time>
 </span><br>
 
 
@@ -278,7 +348,14 @@
     </div>
 
     
-<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2020/03/16/Linux/istio%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">istio 安装使用</h4>
+      </a>
+    </div>
   
 
   
