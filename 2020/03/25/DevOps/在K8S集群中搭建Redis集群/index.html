@@ -34,7 +34,7 @@
 <meta property="og:site_name" content="Lockey">
 <meta property="og:description" content="背景   在 K8S 集群中搭建 Redis 集群 K8S 集群使用 istio 接管网络   注意事项   由于 istio 接管网络，会造成 Redis 集群初始化不能成功（一直卡在：Waiting for the cluster to join） 以上问题需要在 pod 启动的时候设置 cluster-announce-ip，具体见下 ↓   部署集群前提   使用 PV&#x2F;PVC 存储（可搭">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-03-25T07:22:58.446Z">
+<meta property="og:updated_time" content="2020-03-25T07:26:37.511Z">
 <meta name="twitter:card" content="summary">
     
         <link rel="alternate" type="application/atom+xml" title="Lockey" href="/atom.xml">
@@ -206,7 +206,7 @@
 <h2 id="部署集群前提"><a class="header-anchor" href="#部署集群前提"></a>部署集群前提</h2>
 <section class="reference">
 <ul>
-<li>使用 PV/PVC 存储（<a href="2020/03/25/Linux/Ubuntu18.04--NFS%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8/index.html">可搭建 NFS</a>）</li>
+<li>使用 PV/PVC 存储（<a href="../../Linux/Ubuntu18.04--NFS%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8/">可搭建 NFS</a>）</li>
 <li>使用 StatefulSet 配置集群</li>
 <li>确认节点间 6379、16379 端口可访问</li>
 </ul>
@@ -417,7 +417,7 @@ spec:
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2020-03-25T07:22:58.446Z" itemprop="dateUpdated">2020-03-25 15:22:58</time>
+    最后更新时间：<time datetime="2020-03-25T07:26:37.511Z" itemprop="dateUpdated">2020-03-25 15:26:37</time>
 </span><br>
 
 
