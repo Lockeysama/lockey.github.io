@@ -152,13 +152,15 @@
     <ul class="post-list">
     
         <li class="post-list-item fade">
-            <article id="post-Linux/istio安装使用"
+            <article id="post-DevOps/在K8S集群中搭建Redis集群"
   class="article-card article-type-post" itemprop="blogPost">
 
     <div class="post-meta">
-        <time class="post-time" title="2020-03-16 16:06:48" datetime="2020-03-16T08:06:48.000Z"  itemprop="datePublished">2020-03-16</time>
+        <time class="post-time" title="2020-03-25 14:46:50" datetime="2020-03-25T06:46:50.000Z"  itemprop="datePublished">2020-03-25</time>
 
         
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/DevOps/">DevOps</a></li></ul>
+
 
 
     </div>
@@ -168,7 +170,134 @@
 
   
     <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2020/03/16/Linux/istio%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8/">istio 安装使用</a>
+      <a class="post-title-link" href="/2020/03/25/DevOps/%E5%9C%A8K8S%E9%9B%86%E7%BE%A4%E4%B8%AD%E6%90%AD%E5%BB%BARedis%E9%9B%86%E7%BE%A4/">在K8S集群中搭建Redis集群(istio网络).md</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        背景
+
+
+在 K8S 集群中搭建 Redis 集群
+K8S 集群使用 istio 接管网络
+
+
+注意事项
+
+
+由于 istio 接管网络，会造成 Redis 集群初始化不能成功（一直卡在：Waiting for the cluster to join）
+以上问题需要在 pod 启动的时候设置 cluster-announce-ip，具体见下 ↓
+
+
+部署集群前提
+
+
+使用 PV/PVC 存储...
+    
+
+        <a href="/2020/03/25/DevOps/%E5%9C%A8K8S%E9%9B%86%E7%BE%A4%E4%B8%AD%E6%90%AD%E5%BB%BARedis%E9%9B%86%E7%BE%A4/" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/K8S/" rel="tag">K8S</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis/" rel="tag">Redis</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/istio/" rel="tag">istio</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%9B%86%E7%BE%A4/" rel="tag">集群</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-Linux/Ubuntu18.04--NFS安装使用"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2020-03-25 14:12:31" datetime="2020-03-25T06:12:31.000Z"  itemprop="datePublished">2020-03-25</time>
+
+        
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Linux/">Linux</a></li></ul>
+
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2020/03/25/Linux/Ubuntu18.04--NFS%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8/">Ubuntu18.04 NFS 安装使用</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        环境
+
+
+Ubuntu 18.04
+
+
+安装
+
+安装软件包
+
+$apt install nfs-kernel-server
+如出现依赖错误 ↓
+.
+.
+.
+The following packages have unmet dependencies:
+ nfs-kernel-server : Depends: libtirpc1 but it is not going to be insta...
+    
+
+        <a href="/2020/03/25/Linux/Ubuntu18.04--NFS%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8/" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Depends/" rel="tag">Depends</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NFS/" rel="tag">NFS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nfs-kernel-server/" rel="tag">nfs-kernel-server</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-DevOps/istio安装使用"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2020-03-16 16:06:48" datetime="2020-03-16T08:06:48.000Z"  itemprop="datePublished">2020-03-16</time>
+
+        
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/DevOps/">DevOps</a></li></ul>
+
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2020/03/16/DevOps/istio%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8/">istio 安装使用</a>
     </h3>
   
 
@@ -180,24 +309,33 @@
     
         概念
 
+Istio 是Google、IBM 和Lyft 联合开源的服务网格（Service Mesh）框架，旨在解决大量微服务的发现、连接、管理、监控以及安全等问题。 Istio 对应用是透明的，不需要改动任何服务代码就可以实现透明的服务治理。
+
 官方文档（中英文可切换）
 
 istio
-为命名空间注入 sidecar
-kubectl label namespace default istio-injection=enabled
-service
-vs
-dr
-gw
 
-未完，待填坑
+注意
 
 
+官方文档实在太全了，没什么好整理的
+
+
+稍微阅读文档里的“概念部分”
+安装istio
+
+推荐使...
     
 
-        <a href="/2020/03/16/Linux/istio%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8/" class="post-more waves-effect waves-button">
+        <a href="/2020/03/16/DevOps/istio%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8/" class="post-more waves-effect waves-button">
             阅读全文…
         </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/K8S/" rel="tag">K8S</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Kubernetes/" rel="tag">Kubernetes</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Server-Mesh/" rel="tag">Server Mesh</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/istio/" rel="tag">istio</a></li></ul>
+
     </div>
     
 </article>
@@ -205,13 +343,15 @@ gw
         </li>
     
         <li class="post-list-item fade">
-            <article id="post-Linux/Docker开源仓库系统Harbor搭建与使用"
+            <article id="post-DevOps/Docker开源仓库系统Harbor搭建与使用"
   class="article-card article-type-post" itemprop="blogPost">
 
     <div class="post-meta">
         <time class="post-time" title="2020-03-12 18:21:45" datetime="2020-03-12T10:21:45.000Z"  itemprop="datePublished">2020-03-12</time>
 
         
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/DevOps/">DevOps</a></li></ul>
+
 
 
     </div>
@@ -221,7 +361,7 @@ gw
 
   
     <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2020/03/12/Linux/Docker%E5%BC%80%E6%BA%90%E4%BB%93%E5%BA%93%E7%B3%BB%E7%BB%9FHarbor%E6%90%AD%E5%BB%BA%E4%B8%8E%E4%BD%BF%E7%94%A8/">Docker 开源仓库系统 Harbor 搭建与使用</a>
+      <a class="post-title-link" href="/2020/03/12/DevOps/Docker%E5%BC%80%E6%BA%90%E4%BB%93%E5%BA%93%E7%B3%BB%E7%BB%9FHarbor%E6%90%AD%E5%BB%BA%E4%B8%8E%E4%BD%BF%E7%94%A8/">Docker 开源仓库系统 Harbor 搭建与使用</a>
     </h3>
   
 
@@ -249,9 +389,15 @@ Harbor是一个开源的容器镜像管理系统，它通过基于角色的访�
 搭配在集群内部...
     
 
-        <a href="/2020/03/12/Linux/Docker%E5%BC%80%E6%BA%90%E4%BB%93%E5%BA%93%E7%B3%BB%E7%BB%9FHarbor%E6%90%AD%E5%BB%BA%E4%B8%8E%E4%BD%BF%E7%94%A8/" class="post-more waves-effect waves-button">
+        <a href="/2020/03/12/DevOps/Docker%E5%BC%80%E6%BA%90%E4%BB%93%E5%BA%93%E7%B3%BB%E7%BB%9FHarbor%E6%90%AD%E5%BB%BA%E4%B8%8E%E4%BD%BF%E7%94%A8/" class="post-more waves-effect waves-button">
             阅读全文…
         </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/" rel="tag">Docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Harbor/" rel="tag">Harbor</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E4%BB%93%E5%BA%93/" rel="tag">仓库</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%AE%B9%E5%99%A8/" rel="tag">容器</a></li></ul>
+
     </div>
     
 </article>
@@ -691,114 +837,6 @@ Configuration
     <div class="post-footer">
         
 	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Zabbix/" rel="tag">Zabbix</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%9B%91%E6%8E%A7/" rel="tag">监控</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%BF%90%E7%BB%B4/" rel="tag">运维</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-DevOps/云计算"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2019-12-10 15:43:55" datetime="2019-12-10T07:43:55.000Z"  itemprop="datePublished">2019-12-10</time>
-
-        
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/DevOps/">DevOps</a></li></ul>
-
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2019/12/10/DevOps/%E4%BA%91%E8%AE%A1%E7%AE%97/">云计算</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        概念
-
-云计算（cloud computing）是分布式计算的一种，指的是通过网络“云”将巨大的数据计算处理程序分解成无数个小程序，然后，通过多部服务器组成的系统进行处理和分析这些小程序得到结果并返回给用户。云计算早期，简单地说，就是简单的分布式计算，解决任务分发，并进行计算结果的合并。因而，云计算又称为网格计算。通过这项技术，可以在很短的时间内（几秒种）完成对数以万计的数据的处理，从而达到...
-    
-
-        <a href="/2019/12/10/DevOps/%E4%BA%91%E8%AE%A1%E7%AE%97/" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E4%BA%91%E8%AE%A1%E7%AE%97/" rel="tag">云计算</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-DevOps/DevOps"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2019-12-09 18:06:13" datetime="2019-12-09T10:06:13.000Z"  itemprop="datePublished">2019-12-09</time>
-
-        
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/DevOps/">DevOps</a></li></ul>
-
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2019/12/09/DevOps/DevOps/">DevOps</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        前置知识
-
-云计算
-
-概念
-
-DevOps = Development(开发人员) + Operations(运维人员)
-DevOps 是一种重视“开发人员”和“运维人员”之间沟通合作的文化、运动或者惯例。通过自动化“软件交付”和“架构变更”的流程，使构建、测试、发布软件能更快、更频繁和更可靠。
-各部门关系图
-
-                
-                    
-  ...
-    
-
-        <a href="/2019/12/09/DevOps/DevOps/" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Ansible/" rel="tag">Ansible</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/" rel="tag">自动化</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%BF%90%E7%BB%B4/" rel="tag">运维</a></li></ul>
 
     </div>
     

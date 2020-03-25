@@ -2,9 +2,30 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://www.lockey.xyz/2020/03/16/Linux/istio%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8/</loc>
+    <loc>http://www.lockey.xyz/2020/03/25/DevOps/%E5%9C%A8K8S%E9%9B%86%E7%BE%A4%E4%B8%AD%E6%90%AD%E5%BB%BARedis%E9%9B%86%E7%BE%A4/</loc>
     
-    <lastmod>2020-03-18T04:37:37.005Z</lastmod>
+    <lastmod>2020-03-25T07:11:36.528Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.lockey.xyz/2020/03/25/Linux/Ubuntu18.04--NFS%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8/</loc>
+    
+    <lastmod>2020-03-25T06:45:11.042Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.lockey.xyz/2020/03/16/DevOps/istio%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8/</loc>
+    
+    <lastmod>2020-03-25T06:11:44.860Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.lockey.xyz/2020/03/12/DevOps/Docker%E5%BC%80%E6%BA%90%E4%BB%93%E5%BA%93%E7%B3%BB%E7%BB%9FHarbor%E6%90%AD%E5%BB%BA%E4%B8%8E%E4%BD%BF%E7%94%A8/</loc>
+    
+    <lastmod>2020-03-25T06:11:11.697Z</lastmod>
     
   </url>
   
@@ -12,13 +33,6 @@
     <loc>http://www.lockey.xyz/2020/03/12/Linux/Linux%E5%9F%BA%E7%A1%80%E9%9A%8F%E7%AC%94/</loc>
     
     <lastmod>2020-03-18T04:30:13.287Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.lockey.xyz/2020/03/12/Linux/Docker%E5%BC%80%E6%BA%90%E4%BB%93%E5%BA%93%E7%B3%BB%E7%BB%9FHarbor%E6%90%AD%E5%BB%BA%E4%B8%8E%E4%BD%BF%E7%94%A8/</loc>
-    
-    <lastmod>2020-03-18T04:29:56.240Z</lastmod>
     
   </url>
   

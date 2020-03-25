@@ -4,13 +4,91 @@
   
     
     <entry>
+      <title>在K8S集群中搭建Redis集群(istio网络).md</title>
+      <link href="/2020/03/25/DevOps/%E5%9C%A8K8S%E9%9B%86%E7%BE%A4%E4%B8%AD%E6%90%AD%E5%BB%BARedis%E9%9B%86%E7%BE%A4/"/>
+      <url>/2020/03/25/DevOps/%E5%9C%A8K8S%E9%9B%86%E7%BE%A4%E4%B8%AD%E6%90%AD%E5%BB%BARedis%E9%9B%86%E7%BE%A4/</url>
+      
+        <content type="html"><![CDATA[<h2 id="背景"><a class="header-anchor" href="#背景"></a>背景</h2><section class="reference"><ul><li>在 K8S 集群中搭建 Redis 集群</li><li>K8S 集群使用 istio 接管网络</li></ul></section><h2 id="注意事项"><a class="header-anchor" href="#注意事项"></a>注意事项</h2><section class="reference"><div class="warning"><p>由于 istio 接管网络，会造成 Redis 集群初始化不能成功（一直卡在：Waiting for the cluster to join）<br>以上问题需要在 pod 启动的时候设置 cluster-announce-ip，具体见下 ↓</p></div></section><h2 id="部署集群前提"><a class="header-anchor" href="#部署集群前提"></a>部署集群前提</h2><section class="reference"><ul><li>使用 PV/PVC 存储（<a href="../Linux/Ubuntu18.04--NFS%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8.md">可搭建 NFS</a>）</li><li>使用 StatefulSet 配置集群</li><li>确认节点间 6379、16379 端口可访问</li></ul></section><h2 id="部署"><a class="header-anchor" href="#部署"></a>部署</h2><section class="reference"></section><h4 id="部署-nfs-管理-nfs-client-provisioner"><a class="header-anchor" href="#部署-nfs-管理-nfs-client-provisioner"></a>部署 NFS 管理(nfs-client-provisioner)</h4><section class="sample"><pre><code>cat &lt;&lt; EOF &gt; ncp.yaml---kind: ServiceAccountapiVersion: v1metadata:  name: nfs-client-provisioner---kind: ClusterRoleapiVersion: rbac.authorization.k8s.io/v1metadata:  name: nfs-client-provisioner-runnerrules:  - apiGroups: [&quot;&quot;]    resources: [&quot;persistentvolumes&quot;]    verbs: [&quot;get&quot;, &quot;list&quot;, &quot;watch&quot;, &quot;create&quot;, &quot;delete&quot;]  - apiGroups: [&quot;&quot;]    resources: [&quot;persistentvolumeclaims&quot;]    verbs: [&quot;get&quot;, &quot;list&quot;, &quot;watch&quot;, &quot;update&quot;]  - apiGroups: [&quot;storage.k8s.io&quot;]    resources: [&quot;storageclasses&quot;]    verbs: [&quot;get&quot;, &quot;list&quot;, &quot;watch&quot;]  - apiGroups: [&quot;&quot;]    resources: [&quot;events&quot;]    verbs: [&quot;list&quot;, &quot;watch&quot;, &quot;create&quot;, &quot;update&quot;, &quot;patch&quot;]  - apiGroups: [&quot;&quot;]    resources: [&quot;endpoints&quot;]    verbs: [&quot;get&quot;, &quot;list&quot;, &quot;watch&quot;, &quot;create&quot;, &quot;update&quot;, &quot;patch&quot;]---kind: ClusterRoleBindingapiVersion: rbac.authorization.k8s.io/v1metadata:  name: run-nfs-client-provisionersubjects:  - kind: ServiceAccount    name: nfs-client-provisioner    namespace: defaultroleRef:  kind: ClusterRole  name: nfs-client-provisioner-runner  apiGroup: rbac.authorization.k8s.io---kind: DeploymentapiVersion: apps/v1metadata:  name: nfs-client-provisionerspec:  replicas: 1  selector:    matchLabels:      app: nfs-client-provisioner  strategy:    type: Recreate  template:    metadata:      labels:        app: nfs-client-provisioner    spec:      serviceAccountName: nfs-client-provisioner      containers:        - name: nfs-client-provisioner          image: &lt;镜像仓库(网络方便可以自行到 Docker HUB 找镜像、版本)&gt;/nfs-client-provisioner:latest          volumeMounts:            - name: nfs-client-root              mountPath: /persistentvolumes          env:            - name: PROVISIONER_NAME              value: nfs-client-provisioner            - name: NFS_SERVER              value: &lt;NFS 服务端主机 IP&gt;            - name: NFS_PATH              value: &lt;NSF 服务端导出目录&gt;      volumes:        - name: nfs-client-root          nfs:            server: &lt;NFS 服务端主机 IP&gt;            path: &lt;NSF 服务端导出目录&gt;---apiVersion: storage.k8s.io/v1kind: StorageClassmetadata:  name: nfs-storageprovisioner: nfs-client-provisionerEOF</code></pre></section><section class="reference"></section><h4 id="部署-redis-集群"><a class="header-anchor" href="#部署-redis-集群"></a>部署 Redis 集群</h4><section class="sample"><pre><code>cat &lt;&lt; EOF &gt; redis-cluster.yaml---apiVersion: v1kind: ConfigMapmetadata:  name: redis-clusterdata:  update-node.sh: |    #!/bin/sh    REDIS_NODES=&quot;/data/nodes.conf&quot;    sed -i -e &quot;/myself/ s/[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}/${POD_IP}/&quot; ${REDIS_NODES}    cp /conf/redis.conf /redis.conf    sed -i &quot;s/MY_IP/${POD_IP}/&quot; /redis.conf  # 解决 istio 网络下，Redis 集群初始化失败问题    exec &quot;$@&quot;  redis.conf: |+    cluster-enabled yes    cluster-require-full-coverage no    cluster-node-timeout 15000    cluster-config-file /data/nodes.conf    cluster-migration-barrier 1    appendonly yes    protected-mode no    cluster-announce-ip MY_IP  # 解决 istio 网络下，Redis 集群初始化失败问题#创建statefulset服务---apiVersion: apps/v1kind: StatefulSetmetadata:  name: redis-clusterspec:  serviceName: redis-cluster  replicas: 6  selector:    matchLabels:      app: redis-cluster  template:    metadata:      labels:        app: redis-cluster    spec:      containers:      - name: redis        image: &lt;镜像仓库(网络方便可以自行到 Docker HUB 找镜像、版本&gt;/redis:5.0.1-alpine        ports:        - containerPort: 6379          name: client        - containerPort: 16379          name: gossip        command: [&quot;/conf/update-node.sh&quot;, &quot;redis-server&quot;, &quot;/redis.conf&quot;]        env:        - name: POD_IP          valueFrom:            fieldRef:              fieldPath: status.podIP        volumeMounts:        - name: conf          mountPath: /conf          readOnly: false        - name: data          mountPath: /data          readOnly: false      volumes:      - name: conf        configMap:          name: redis-cluster          defaultMode: 0755  volumeClaimTemplates:  # pvc模板  - metadata:      name: data      annotations:        volume.beta.kubernetes.io/storage-class: nfs-storage  # 指定存储类为nfs-storage    spec:      accessModes: [ &quot;ReadWriteOnce&quot; ]      resources:        requests:          storage: 1Gi  # 指定持久卷大小---apiVersion: v1kind: Servicemetadata:  name: redis-clusterspec:  type: ClusterIP  ports:  - port: 6379    targetPort: 6379    name: client  - port: 16379    targetPort: 16379    name: gossip  selector:    app: redis-cluster</code></pre></section><section class="reference"></section><h4 id="初始化集群"><a class="header-anchor" href="#初始化集群"></a>初始化集群</h4><section class="reference"><p>$<code>kubectl exec -it redis-cluster-0 -- redis-cli --cluster create --cluster-replicas 1 $(kubectl get pods -l app=redis-cluster -o jsonpath='{range.items[*]}{.status.podIP}:6379 ')</code></p></section><h2 id="测试"><a class="header-anchor" href="#测试"></a>测试</h2><section class="reference"><p>使用<code>redis-cli -c</code>测试集群命令</p><p><strong><em>参考链接</em></strong><br><a href="https://rancher.com/blog/2019/deploying-redis-cluster/" target="_blank" rel="noopener">Deploying Redis Cluster on Top of Kubernetes</a><br><a href="https://stackoverflow.com/questions/58528831/is-it-possible-to-create-a-redis-cluster-within-kubernetes-using-a-istio-search" target="_blank" rel="noopener">Is it possible to create a Redis Cluster within Kubernetes using a Istio Search Mesh?</a></p></section>]]></content>
+      
+      
+      <categories>
+          
+          <category> DevOps </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> K8S </tag>
+            
+            <tag> istio </tag>
+            
+            <tag> Redis </tag>
+            
+            <tag> 集群 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Ubuntu18.04 NFS 安装使用</title>
+      <link href="/2020/03/25/Linux/Ubuntu18.04--NFS%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8/"/>
+      <url>/2020/03/25/Linux/Ubuntu18.04--NFS%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8/</url>
+      
+        <content type="html"><![CDATA[<h2 id="环境"><a class="header-anchor" href="#环境"></a>环境</h2><section class="reference"><ul><li>Ubuntu 18.04</li></ul></section><h2 id="安装"><a class="header-anchor" href="#安装"></a>安装</h2><section class="reference"></section><h4 id="安装软件包"><a class="header-anchor" href="#安装软件包"></a>安装软件包</h4><section class="sample"><p>$<code>apt install nfs-kernel-server</code><br>如出现依赖错误 ↓</p><pre><code>...The following packages have unmet dependencies: nfs-kernel-server : Depends: libtirpc1 but it is not going to be installed                     Depends: nfs-common (= 1:1.2.8-6ubuntu1.2) but it is not going to be installedE: Unable to correct problems, you have held broken packages.</code></pre></section><section class="reference"></section><h5 id="错误解决办法："><a class="header-anchor" href="#错误解决办法："></a>错误解决办法：</h5><section class="reference"><ol><li>apt 安装依赖</li><li>第一步如果出现更多依赖报错看第 3 步</li><li>手动安装<ol><li>下载安装包（<a href="http://archive.ubuntu.com/ubuntu/pool/main/libt/libtirpc/libtirpc1_0.2.5-1.2ubuntu0.1_amd64.deb" target="_blank" rel="noopener">libtirpc1_0.2.5-1.2ubuntu0.1_amd64.deb</a>）<a href="http://archive.ubuntu.com/ubuntu/pool/main/n/nfs-utils/nfs-kernel-server_1.3.4-2.1ubuntu5_amd64.deb" target="_blank" rel="noopener">nfs-kernel-server_1.3.4-2.1ubuntu5_amd64.deb</a><a href="http://archive.ubuntu.com/ubuntu/pool/main/n/nfs-utils/nfs-common_1.3.4-2.1ubuntu5_amd64.deb" target="_blank" rel="noopener">nfs-common_1.3.4-2.1ubuntu5_amd64.deb</a><a href="http://archive.ubuntu.com/ubuntu/pool/main/k/keyutils/keyutils_1.5.9-9.2ubuntu2_amd64.deb" target="_blank" rel="noopener">keyutils_1.5.9-9.2ubuntu2_amd64.deb</a></li><li>使用<code>dpkg -i</code>安装下载好的 deb 包；如出现错误提示，可以根据提示使用 apt 或再下载安装包安装</li><li>再有问题可以使用 journalctl 等工具排查问题</li></ol></li></ol></section><h2 id="配置"><a class="header-anchor" href="#配置"></a>配置</h2><section class="reference"><ol><li>创建导出目录（服务端、客户端共享目录）$<code>mkdir -p /xxx/xxxxx</code></li><li>开放权限$<code>chown nobody:nogroup /xxx/xxxxx &amp;&amp; chmod 777 /xxx/xxxxx</code>(权限开放自己控制，全开有风险，需谨慎使用)</li><li>配置导出目录权限$<code>vim /etc/exports</code>(具体规则 exports 里有 example)</li><li>重启 nfs-kernel-server、rpcbind 服务</li></ol></section><h2 id="使用"><a class="header-anchor" href="#使用"></a>使用</h2><section class="reference"><div class="info"><p>客户端主机需要安装 nfs-common 安装方法同上</p></div></section><h4 id="在客户端主机创建挂载目录"><a class="header-anchor" href="#在客户端主机创建挂载目录"></a>在客户端主机创建挂载目录</h4><section class="reference"><p>$<code>mkdir -p /xxx/xxxxx</code></p></section><h4 id="挂载"><a class="header-anchor" href="#挂载"></a>挂载</h4><section class="reference"><p>$<code>mount -t nfs &lt;NFS服务端主机IP&gt;:&lt;NFS服务端主机导出目录&gt; &lt;客户端主机挂载目录&gt;</code></p></section><h2 id="测试"><a class="header-anchor" href="#测试"></a>测试</h2><section class="reference"><ul><li>在客户端挂载目录中操作（创建文件、文件夹等），能在服务端导出目录中同步</li><li>在服务端导出目录中操作（创建文件、文件夹等），能在客户端挂载目录中同步</li></ul></section>]]></content>
+      
+      
+      <categories>
+          
+          <category> Linux </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> NFS </tag>
+            
+            <tag> nfs-kernel-server </tag>
+            
+            <tag> Depends </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>istio 安装使用</title>
-      <link href="/2020/03/16/Linux/istio%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8/"/>
-      <url>/2020/03/16/Linux/istio%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8/</url>
+      <link href="/2020/03/16/DevOps/istio%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8/"/>
+      <url>/2020/03/16/DevOps/istio%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8/</url>
       
-        <content type="html"><![CDATA[<h2 id="概念"><a class="header-anchor" href="#概念"></a>概念</h2><section class="reference"></section><h2 id="官方文档-中英文可切换"><a class="header-anchor" href="#官方文档-中英文可切换"></a>官方文档（中英文可切换）</h2><section class="reference"><p><a href="https://istio.io/zh/docs/" target="_blank" rel="noopener">istio</a></p><p>为命名空间注入 sidecar<br>kubectl label namespace default istio-injection=enabled</p><p>service<br>vs<br>dr<br>gw</p></section><h2 id="未完-待填坑"><a class="header-anchor" href="#未完-待填坑"></a>未完，待填坑</h2><section class="reference"></section>]]></content>
+        <content type="html"><![CDATA[<h2 id="概念"><a class="header-anchor" href="#概念"></a>概念</h2><section class="reference"><p>Istio 是Google、IBM 和Lyft 联合开源的服务网格（Service Mesh）框架，旨在解决大量微服务的发现、连接、管理、监控以及安全等问题。 Istio 对应用是透明的，不需要改动任何服务代码就可以实现透明的服务治理。</p></section><h2 id="官方文档-中英文可切换"><a class="header-anchor" href="#官方文档-中英文可切换"></a>官方文档（中英文可切换）</h2><section class="reference"><p><a href="https://istio.io/zh/docs/" target="_blank" rel="noopener">istio</a></p></section><h2 id="注意"><a class="header-anchor" href="#注意"></a>注意</h2><section class="reference"><div class="info"><p>官方文档实在太全了，没什么好整理的</p></div><ol><li>稍微阅读文档里的“概念部分”</li><li>安装istio<ol><li>推荐使用：istioctl；helm 方式在新版本已经弃用</li><li>istio 默认使用国外镜像仓库，可以自行修改配置文件（install &gt; kubenetes）</li></ol></li><li>安装示例走一遍</li><li>安装任务走一遍</li><li><strong>istio 接管了网络，会对部分第三方服务的网络访问造成影响(如：Redis 集群的初始化等)</strong></li></ol></section>]]></content>
       
       
+      <categories>
+          
+          <category> DevOps </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> K8S </tag>
+            
+            <tag> Kubernetes </tag>
+            
+            <tag> istio </tag>
+            
+            <tag> Server Mesh </tag>
+            
+        </tags>
       
     </entry>
     
@@ -18,12 +96,30 @@
     
     <entry>
       <title>Docker 开源仓库系统 Harbor 搭建与使用</title>
-      <link href="/2020/03/12/Linux/Docker%E5%BC%80%E6%BA%90%E4%BB%93%E5%BA%93%E7%B3%BB%E7%BB%9FHarbor%E6%90%AD%E5%BB%BA%E4%B8%8E%E4%BD%BF%E7%94%A8/"/>
-      <url>/2020/03/12/Linux/Docker%E5%BC%80%E6%BA%90%E4%BB%93%E5%BA%93%E7%B3%BB%E7%BB%9FHarbor%E6%90%AD%E5%BB%BA%E4%B8%8E%E4%BD%BF%E7%94%A8/</url>
+      <link href="/2020/03/12/DevOps/Docker%E5%BC%80%E6%BA%90%E4%BB%93%E5%BA%93%E7%B3%BB%E7%BB%9FHarbor%E6%90%AD%E5%BB%BA%E4%B8%8E%E4%BD%BF%E7%94%A8/"/>
+      <url>/2020/03/12/DevOps/Docker%E5%BC%80%E6%BA%90%E4%BB%93%E5%BA%93%E7%B3%BB%E7%BB%9FHarbor%E6%90%AD%E5%BB%BA%E4%B8%8E%E4%BD%BF%E7%94%A8/</url>
       
         <content type="html"><![CDATA[<h2 id="简介"><a class="header-anchor" href="#简介"></a>简介</h2><section class="reference"><ul><li>官方<ul><li><a href="https://goharbor.io/" target="_blank" rel="noopener">Harbor</a>是一个开源的容器镜像管理系统，它通过基于角色的访问控制来保护镜像，扫描镜像中的漏洞，并将图像签名为可信的。作为一个CNCF孵化项目，Harbor 为您提供了合规性、性能和互操作性，帮助您跨云原生计算平台(如 Kubernetes 和 Docker )一致而安全地管理镜像。</li></ul></li><li>非官方<ul><li>开源</li><li>企业级容器镜像管理系统</li><li>成熟</li><li>生态健全</li><li>使用的大厂众多</li><li>搭配在集群内部，加速集群创建、升级</li></ul></li></ul></section><h2 id="环境"><a class="header-anchor" href="#环境"></a>环境</h2><section class="reference"><p>操作系统：Linux(Ubuntu18.04)<br>容器管理：Docker + Docker-Compose</p></section><h2 id="安装"><a class="header-anchor" href="#安装"></a>安装</h2><section class="reference"><ol><li><a href="https://github.com/goharbor/harbor/releases" target="_blank" rel="noopener">下载安装包</a></li><li>解压并进入安装包</li><li>修改<code>harbor.yml</code>配置（hostname、harbor_admin_password等）</li><li>修改<code>docker-compose.yml</code>（如需要修改镜像源等，有条件可以略过）</li><li>使用 docker-compose 启动 Harbor</li></ol></section><h2 id="使用"><a class="header-anchor" href="#使用"></a>使用</h2><section class="reference"><ul><li>命令行操作与 <a href="https://docs.docker.com/get-started/part3/" target="_blank" rel="noopener">DockerHUB</a> 基本一致</li><li>浏览器<ul><li>修改 /etc/hosts 文件，设置目标主机IP和 harbor.yml 中设置的 hostname</li><li>使用默认用户名 admin 和 harbor.yml 中设置的密码登录</li></ul></li></ul></section><h2 id="注意事项"><a class="header-anchor" href="#注意事项"></a>注意事项</h2><section class="sample"><ul><li>使用私有仓库时：<ul><li>首先需要在 Docker 客户机上登录（$<code>docker login &lt;hostname&gt;</code>）<ul><li>新版本使用 https，如登录不上：<ul><li>修改 daemon.json 增加 insecure registries（见下面示例 ↓）</li><li>重启 docker 服务</li></ul></li></ul></li></ul></li></ul><p><strong><em>Docker daemon.json 增加 insecure registries</em></strong></p><pre><code>vim /etc/docker/daemon.json---{  &quot;registry-mirrors&quot;: [&quot;https://xxx.mirror.aliyuncs.com&quot;],  &quot;insecure-registries&quot; : [&quot;&lt;harbor hostname&gt;&quot;]}---systemctl daemon-reloadsystemctl restart docker</code></pre></section>]]></content>
       
       
+      <categories>
+          
+          <category> DevOps </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Docker </tag>
+            
+            <tag> Harbor </tag>
+            
+            <tag> 容器 </tag>
+            
+            <tag> 仓库 </tag>
+            
+        </tags>
       
     </entry>
     

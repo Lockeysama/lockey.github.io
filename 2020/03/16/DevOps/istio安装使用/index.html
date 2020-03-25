@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+<!-- Baidu Tongji -->
+<script>var _hmt = _hmt || []</script>
+<script async src="//hm.baidu.com/hm.js?493a2f87364df67d7b0018c29a2cde1a"></script>
+<!-- End Baidu Tongji -->
+
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>istio 安装使用 | Lockey</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="K8S,Kubernetes,istio,Server Mesh">
+    <meta name="description" content="概念  Istio 是Google、IBM 和Lyft 联合开源的服务网格（Service Mesh）框架，旨在解决大量微服务的发现、连接、管理、监控以及安全等问题。 Istio 对应用是透明的，不需要改动任何服务代码就可以实现透明的服务治理。  官方文档（中英文可切换）  istio  注意   官方文档实在太全了，没什么好整理的   稍微阅读文档里的“概念部分” 安装istio  推荐使用：i">
+<meta name="keywords" content="K8S,Kubernetes,istio,Server Mesh">
+<meta property="og:type" content="article">
+<meta property="og:title" content="istio 安装使用">
+<meta property="og:url" content="http:&#x2F;&#x2F;www.lockey.xyz&#x2F;2020&#x2F;03&#x2F;16&#x2F;DevOps&#x2F;istio%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8&#x2F;index.html">
+<meta property="og:site_name" content="Lockey">
+<meta property="og:description" content="概念  Istio 是Google、IBM 和Lyft 联合开源的服务网格（Service Mesh）框架，旨在解决大量微服务的发现、连接、管理、监控以及安全等问题。 Istio 对应用是透明的，不需要改动任何服务代码就可以实现透明的服务治理。  官方文档（中英文可切换）  istio  注意   官方文档实在太全了，没什么好整理的   稍微阅读文档里的“概念部分” 安装istio  推荐使用：i">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-03-25T06:11:44.860Z">
+<meta name="twitter:card" content="summary">
+    
+        <link rel="alternate" type="application/atom+xml" title="Lockey" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off" target="">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Lockey</h5>
+          <a href="mailto:196349143@qq.com" target="_blank" rel="noopener" title="196349143@qq.com" class="mail">196349143@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/Lockeysama" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" target="_blank" rel="noopener" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">istio 安装使用</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" target="_blank" rel="noopener" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search" target="">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare" target="">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">istio 安装使用</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2020-03-16T08:06:48.000Z" itemprop="datePublished" class="page-time">
+  2020-03-16
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/DevOps/">DevOps</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#概念"><span class="post-toc-number">1.</span> <span class="post-toc-text">概念</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#官方文档-中英文可切换"><span class="post-toc-number">2.</span> <span class="post-toc-text">官方文档（中英文可切换）</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#注意"><span class="post-toc-number">3.</span> <span class="post-toc-text">注意</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-DevOps/istio安装使用"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">istio 安装使用</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2020-03-16 16:06:48" datetime="2020-03-16T08:06:48.000Z"  itemprop="datePublished">2020-03-16</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/DevOps/">DevOps</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="概念"><a class="header-anchor" href="#概念"></a>概念</h2>
+<section class="reference">
+<p>Istio 是Google、IBM 和Lyft 联合开源的服务网格（Service Mesh）框架，旨在解决大量微服务的发现、连接、管理、监控以及安全等问题。 Istio 对应用是透明的，不需要改动任何服务代码就可以实现透明的服务治理。</p>
+</section>
+<h2 id="官方文档-中英文可切换"><a class="header-anchor" href="#官方文档-中英文可切换"></a>官方文档（中英文可切换）</h2>
+<section class="reference">
+<p><a href="https://istio.io/zh/docs/" target="_blank" rel="noopener">istio</a></p>
+</section>
+<h2 id="注意"><a class="header-anchor" href="#注意"></a>注意</h2>
+<section class="reference">
+<div class="info">
+<p>官方文档实在太全了，没什么好整理的</p>
+</div>
+<ol>
+<li>稍微阅读文档里的“概念部分”</li>
+<li>安装istio
+<ol>
+<li>推荐使用：istioctl；helm 方式在新版本已经弃用</li>
+<li>istio 默认使用国外镜像仓库，可以自行修改配置文件（install &gt; kubenetes）</li>
+</ol>
+</li>
+<li>安装示例走一遍</li>
+<li>安装任务走一遍</li>
+<li><strong>istio 接管了网络，会对部分第三方服务的网络访问造成影响(如：Redis 集群的初始化等)</strong></li>
+</ol>
+</section>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2020-03-25T06:11:44.860Z" itemprop="dateUpdated">2020-03-25 14:11:44</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/2020/03/16/DevOps/istio%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8/" target="_blank" rel="external">http://www.lockey.xyz/2020/03/16/DevOps/istio%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://www.lockey.xyz">
+            <img src="/img/avatar.jpg" alt="Lockey">
+            Lockey
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light" target="">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/K8S/" rel="tag">K8S</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Kubernetes/" rel="tag">Kubernetes</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Server-Mesh/" rel="tag">Server Mesh</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/istio/" rel="tag">istio</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.lockey.xyz/2020/03/16/DevOps/istio%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8/&title=《istio 安装使用》 — Lockey&pic=http://www.lockey.xyz/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" target="_blank" rel="noopener" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.lockey.xyz/2020/03/16/DevOps/istio%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8/&title=《istio 安装使用》 — Lockey&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.lockey.xyz/2020/03/16/DevOps/istio%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《istio 安装使用》 — Lockey&url=http://www.lockey.xyz/2020/03/16/DevOps/istio%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8/&via=http://www.lockey.xyz" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.lockey.xyz/2020/03/16/DevOps/istio%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" target="" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2020/03/25/Linux/Ubuntu18.04--NFS%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Ubuntu18.04 NFS 安装使用</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2020/03/12/DevOps/Docker%E5%BC%80%E6%BA%90%E4%BB%93%E5%BA%93%E7%B3%BB%E7%BB%9FHarbor%E6%90%AD%E5%BB%BA%E4%B8%8E%E4%BD%BF%E7%94%A8/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Docker 开源仓库系统 Harbor 搭建与使用</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="comments" id="comments">
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+        var id = location.pathname
+        if (location.pathname.length > 50) {
+          id = location.pathname.replace(/\/\d+\/\d+\/\d+\//, '').replace('/', '').substring(0, 50)
+        }
+        const gitalk = new Gitalk({
+          clientID: 'd3fa7d2ac1b4bf641e09',
+          clientSecret: '9b3c0342a36274f142db4652376ea42260ed4766',
+          repo: 'lockey.github.io',
+          owner: 'Lockeysama',
+          admin: ['Lockeysama'],
+          id: id,      // Ensure uniqueness and length less than 50
+          title: document.title.split('|')[0],
+          distractionFreeMode: false  // Facebook-like distraction free mode
+        })
+
+        gitalk.render('gitalk-container')
+    </script>
+</section>
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;" target=""><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Lockey &copy; 2019 - 2020</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" target="" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.lockey.xyz/2020/03/16/DevOps/istio%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8/&title=《istio 安装使用》 — Lockey&pic=http://www.lockey.xyz/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" target="_blank" rel="noopener" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.lockey.xyz/2020/03/16/DevOps/istio%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8/&title=《istio 安装使用》 — Lockey&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.lockey.xyz/2020/03/16/DevOps/istio%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《istio 安装使用》 — Lockey&url=http://www.lockey.xyz/2020/03/16/DevOps/istio%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8/&via=http://www.lockey.xyz" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.lockey.xyz/2020/03/16/DevOps/istio%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;" target="_blank" rel="noopener"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACr0lEQVR42u3aQW4jMQwEwPz/01lgT3tY292kZCdA6WQk9kilg8ih+PUVj++/I/nOv+PRf9tZkt+uBh4eHt5o6Y9GsvTkyY8Az7/z/PPzNePh4eHd5j0/ph89Ov/LjRmjJ+Ph4eF9lPf8WM+nbzcCDw8P77fzZmO/cXh4eHg/jZc/Ll9uTp2t4XCtBQ8PDy/mtRdgP+Hzxfs9PDw8vMWtepsc5+lye7gP14mHh4d3gZekqnnrVdsWkG9Qe/FW1FTw8PDwSl5bZm034lPXZnh4eHjv4SWv+u0EZ6smeUkXDw8P7x5vdom1v/TKw8OpcgYeHh7eDd6mQJAUI/IyRD5XnWTj4eHhrXltWry56MpDwrEUHw8PD+8d1YNh0397rOdBqI1yeHh4eO/hzdqt2qP/1KLr5B4PDw/vAi9PZ3NqXqRoWxlmM+Lh4eGd4rVF2FMF1gMHfR4M8PDw8I7yZl9tJ8vLtfsyR9F0hYeHhzfibdqeZolyG1ry5P4/v8LDw8O7zDt1GZaXYtsmrbwsgoeHh3ePN0t580ao2UXXpnnrRX0aDw8P7xCvHaeS5s3nYU8ZHh4e3pq3f+3PL9LaGfM0+mF4wMPDw7vA27RJzRbRNmnlSXz9xoCHh4c34m2apdrJ8pJH/gbwosCBh4eHd4HXPu4UYJNMrwIJHh4e3prXXvlvFpcXJvJNKcoQeHh4eId4ySLawkEbMPJyRhKoooiHh4eHt+B9l6NdSttcNbs8exEM8PDw8I7y8nG2wys/+tsGhSEVDw8Pr+QlwaBNi2dhI9mseiV4eHh413j5xfysmSA/0GexCw8PD+8n8/LvzI74PHhEm4iHh4f3UV5+DTY7ymdh48XseHh4eNd4bTEiT77bo7zduGFnGR4eHt6Ct3rVLxsR8jBwKn3Hw8PDO8r7A0KXK/B7y2RvAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+lazyScripts.push('//s95.cnzz.com/z_stat.php?id=1278306875&web_id=1278306875')
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '(～﹃～)~zZ';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '_(:з」∠)_';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>
