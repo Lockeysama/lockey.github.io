@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.lockey.xyz/2020/04/01/Python/Docker%E6%9E%84%E5%BB%BA%E7%A7%81%E6%9C%89pip%E4%BB%93%E5%BA%93/</loc>
+    
+    <lastmod>2020-04-01T06:22:31.542Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.lockey.xyz/2020/03/25/DevOps/%E5%9C%A8K8S%E9%9B%86%E7%BE%A4%E4%B8%AD%E6%90%AD%E5%BB%BARedis%E9%9B%86%E7%BE%A4/</loc>
     
     <lastmod>2020-03-25T07:26:37.511Z</lastmod>

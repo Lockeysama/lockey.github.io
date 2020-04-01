@@ -4,6 +4,37 @@
   
     
     <entry>
+      <title>Docker 构建私有 pip 仓库（devpi）</title>
+      <link href="/2020/04/01/Python/Docker%E6%9E%84%E5%BB%BA%E7%A7%81%E6%9C%89pip%E4%BB%93%E5%BA%93/"/>
+      <url>/2020/04/01/Python/Docker%E6%9E%84%E5%BB%BA%E7%A7%81%E6%9C%89pip%E4%BB%93%E5%BA%93/</url>
+      
+        <content type="html"><![CDATA[<h2 id="使用场景"><a class="header-anchor" href="#使用场景"></a>使用场景</h2><section class="reference"><ul><li>网络环境不佳、不允许</li><li>需要经常性的使用pip（比如 docker 镜像构建）</li><li>觉得第三方源的使用，使带宽压力大</li></ul></section><h2 id="使用"><a class="header-anchor" href="#使用"></a>使用</h2><section class="reference"></section><h4 id="docker-启动-devip-服务"><a class="header-anchor" href="#docker-启动-devip-服务"></a>Docker 启动（devip）服务</h4><section class="sample"><pre><code>docker run -d --name devpi \    --publish 3141:3141 \    --volume /Users/lockey/pypi:/data \  # 自行替换挂载目录    --env=DEVPI_PASSWORD=secret \  # 自行更改登录密码    --restart always \    muccg/devpi:4.5.0</code></pre></section><section class="reference"></section><h4 id="准备"><a class="header-anchor" href="#准备"></a>准备</h4><section class="reference"><p><code>pip install devpi</code></p></section><h4 id="设置"><a class="header-anchor" href="#设置"></a>设置</h4><section class="reference"><p><code>devpi use http://10.0.0.38:3141/root/public</code></p></section><h4 id="登录"><a class="header-anchor" href="#登录"></a>登录</h4><section class="reference"><p><code>devpi login root</code></p></section><h4 id="上传"><a class="header-anchor" href="#上传"></a>上传</h4><section class="reference"><ol><li>下载需要上传的 pip 包（whl、gz、zip等）</li><li><code>devpi upload --from-dir --formats=* .</code>  # 自行修改上传目录</li></ol></section><h4 id="使用-v2"><a class="header-anchor" href="#使用-v2"></a>使用</h4><section class="reference"><p><a href="https://developer.aliyun.com/mirror/pypi?spm=a2c6h.13651102.0.0.3e221b11w9yGDx" target="_blank" rel="noopener">同普通第三方源修改步骤</a></p><p><strong><em>参考链接</em></strong><br><a href="https://hub.docker.com/r/muccg/devpi" target="_blank" rel="noopener">DockerHUB</a></p></section>]]></content>
+      
+      
+      <categories>
+          
+          <category> Python </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Python </tag>
+            
+            <tag> pip </tag>
+            
+            <tag> devpi </tag>
+            
+            <tag> 私有 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>在K8S集群中搭建Redis集群(istio网络)</title>
       <link href="/2020/03/25/DevOps/%E5%9C%A8K8S%E9%9B%86%E7%BE%A4%E4%B8%AD%E6%90%AD%E5%BB%BARedis%E9%9B%86%E7%BE%A4/"/>
       <url>/2020/03/25/DevOps/%E5%9C%A8K8S%E9%9B%86%E7%BE%A4%E4%B8%AD%E6%90%AD%E5%BB%BARedis%E9%9B%86%E7%BE%A4/</url>
