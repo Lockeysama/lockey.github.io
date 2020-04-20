@@ -1,1 +1,1 @@
-http://www.lockey.xyz/2020/04/01/Python/Docker%E6%9E%84%E5%BB%BA%E7%A7%81%E6%9C%89pip%E4%BB%93%E5%BA%93/
+http://www.lockey.xyz/2020/04/20/Python/Uvicorn--%E6%9C%80%E5%BC%BA%E5%BC%82%E6%AD%A5%E6%9C%8D%E5%8A%A1%E5%99%A8%EF%BC%9F/
