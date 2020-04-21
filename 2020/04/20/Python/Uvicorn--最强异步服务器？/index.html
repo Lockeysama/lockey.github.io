@@ -34,8 +34,10 @@
 <meta property="og:site_name" content="Lockey">
 <meta property="og:description" content="Web 服务基础概念  如果需要跑起一个普通的 Web 服务（网站、接口服务）， 一般需要有一台主机（云主机等），然后在主机上启动 Web 应用程序。 在 Python 中，大部分 Web 框架（Django、Flask等）自带的 Web 服务器性能较差，不适合在生产环境投入使用，这个问题的解决方案较多，目前使用较多的是使用专业的 HTTP 服务器（软件，如：Nginx、Apache、IIS等）">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-04-20T10:03:10.134Z">
+<meta property="og:image" content="http:&#x2F;&#x2F;www.lockey.xyz&#x2F;2020&#x2F;04&#x2F;20&#x2F;Python&#x2F;Uvicorn--%E6%9C%80%E5%BC%BA%E5%BC%82%E6%AD%A5%E6%9C%8D%E5%8A%A1%E5%99%A8%EF%BC%9F&#x2F;architecture.png">
+<meta property="og:updated_time" content="2020-04-21T10:07:18.031Z">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http:&#x2F;&#x2F;www.lockey.xyz&#x2F;2020&#x2F;04&#x2F;20&#x2F;Python&#x2F;Uvicorn--%E6%9C%80%E5%BC%BA%E5%BC%82%E6%AD%A5%E6%9C%8D%E5%8A%A1%E5%99%A8%EF%BC%9F&#x2F;architecture.png">
     
         <link rel="alternate" type="application/atom+xml" title="Lockey" href="/atom.xml">
     
@@ -163,7 +165,7 @@
     <aside class="post-widget">
         <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#web-服务基础概念"><span class="post-toc-number">1.</span> <span class="post-toc-text">Web 服务基础概念</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#什么是-web-应用程序？"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">什么是 Web 应用程序？</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#什么是-http-服务器？"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">什么是 HTTP 服务器？</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#什么是-wsgi-服务器？"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">什么是 WSGI 服务器？</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#wsgi-的优缺点"><span class="post-toc-number">2.</span> <span class="post-toc-text">WSGI 的优缺点</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#优点"><span class="post-toc-number">2.0.1.</span> <span class="post-toc-text">优点</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#缺点"><span class="post-toc-number">2.0.2.</span> <span class="post-toc-text">缺点</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#继任者-asgi-异步服务器网关接口"><span class="post-toc-number">3.</span> <span class="post-toc-text">继任者 ASGI（异步服务器网关接口）</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#asgi-服务器"><span class="post-toc-number">4.</span> <span class="post-toc-text">ASGI 服务器</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#主流实现"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">主流实现</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#uvicorn"><span class="post-toc-number">5.</span> <span class="post-toc-text">Uvicorn</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#什么是-uvloop？"><span class="post-toc-number">5.0.1.</span> <span class="post-toc-text">什么是 uvloop？</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#什么是-httptools？"><span class="post-toc-number">5.0.2.</span> <span class="post-toc-text">什么是 httptools？</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#小结"><span class="post-toc-number">6.</span> <span class="post-toc-text">小结</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#总结"><span class="post-toc-number">7.</span> <span class="post-toc-text">总结</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#web-服务基础概念"><span class="post-toc-number">1.</span> <span class="post-toc-text">Web 服务基础概念</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#什么是-web-应用程序？"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">什么是 Web 应用程序？</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#什么是-http-服务器？"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">什么是 HTTP 服务器？</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#什么是-wsgi-服务器？"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">什么是 WSGI 服务器？</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#wsgi-的优缺点"><span class="post-toc-number">2.</span> <span class="post-toc-text">WSGI 的优缺点</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#优点"><span class="post-toc-number">2.0.1.</span> <span class="post-toc-text">优点</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#缺点"><span class="post-toc-number">2.0.2.</span> <span class="post-toc-text">缺点</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#继任者-asgi-异步服务器网关接口"><span class="post-toc-number">3.</span> <span class="post-toc-text">继任者 ASGI（异步服务器网关接口）</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#asgi-服务器"><span class="post-toc-number">4.</span> <span class="post-toc-text">ASGI 服务器</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#主流实现"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">主流实现</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#uvicorn"><span class="post-toc-number">5.</span> <span class="post-toc-text">Uvicorn</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#什么是-uvloop？"><span class="post-toc-number">5.1.</span> <span class="post-toc-text">什么是 uvloop？</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#什么是-异步非阻塞-？"><span class="post-toc-number">5.1.1.</span> <span class="post-toc-text">什么是「异步非阻塞」？</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#一个来自逼乎上的-🌰"><span class="post-toc-number">5.1.1.1.</span> <span class="post-toc-text">一个来自逼乎上的 🌰 ↓</span></a></li></ol></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#什么是-事件驱动-？"><span class="post-toc-number">5.1.2.</span> <span class="post-toc-text">什么是「事件驱动」？</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#⚠-前置基础概念"><span class="post-toc-number">5.1.2.1.</span> <span class="post-toc-text">⚠️ 前置基础概念</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#i-o-多路复用"><span class="post-toc-number">5.1.2.2.</span> <span class="post-toc-text">I/O 多路复用</span></a></li></ol></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#什么是-libuv？"><span class="post-toc-number">5.1.3.</span> <span class="post-toc-text">什么是 libuv？</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#libuv-架构图"><span class="post-toc-number">5.1.3.1.</span> <span class="post-toc-text">libuv 架构图 ↓</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#什么是-httptools？"><span class="post-toc-number">5.2.</span> <span class="post-toc-text">什么是 httptools？</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#小结"><span class="post-toc-number">6.</span> <span class="post-toc-text">小结</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#总结"><span class="post-toc-number">7.</span> <span class="post-toc-text">总结</span></a></li></ol>
         </nav>
     </aside>
 
@@ -241,20 +243,184 @@
 <p><strong><em>The lightning-fast ASGI server.</em></strong><br>
 基于 uvloop 和 httptools 的 ASGI 实现。</p>
 </section>
-<h4 id="什么是-uvloop？"><a class="header-anchor" href="#什么是-uvloop？"></a>什么是 uvloop？</h4>
+<h3 id="什么是-uvloop？"><a class="header-anchor" href="#什么是-uvloop？"></a>什么是 uvloop？</h3>
 <section class="reference">
 <ul>
 <li>是一个高性能的异步非阻塞框架</li>
 <li>是完整的 asyncio 事件循环的替代品</li>
 <li>建立在 libuv 之上
 <ul>
-<li>libuv 是一个高性能的，事件驱动的I/O库，并且提供了跨平台（如windows, linux）的API</li>
+<li>libuv 是一个高性能的，事件驱动的 I/O 库，并且提供了跨平台（如windows, linux）的 API</li>
 </ul>
 </li>
 <li>由 Cython 编写</li>
 </ul>
 </section>
-<h4 id="什么是-httptools？"><a class="header-anchor" href="#什么是-httptools？"></a>什么是 httptools？</h4>
+<h4 id="什么是-异步非阻塞-？"><a class="header-anchor" href="#什么是-异步非阻塞-？"></a>什么是「异步非阻塞」？</h4>
+<section class="reference">
+<p><strong>有异步就有同步，有非阻塞就有阻塞</strong><br>
+组合可得：同步阻塞、同步不阻塞、异步阻塞、异步不阻塞</p>
+</section>
+<h5 id="一个来自逼乎上的-🌰"><a class="header-anchor" href="#一个来自逼乎上的-🌰"></a>一个来自逼乎上的 🌰 ↓</h5>
+<section class="reference">
+<blockquote>
+<p>老张爱喝茶，废话不说，煮开水。<br>
+出场人物：老张，水壶两把（普通水壶，简称水壶；会响的水壶，简称响水壶）。</p>
+<ol>
+<li>老张把水壶放到火上，立等水开。（同步阻塞）<br>
+老张觉得自己有点傻</li>
+<li>老张把水壶放到火上，去客厅看电视，时不时去厨房看看水开没有。（同步非阻塞）<br>
+老张还是觉得自己有点傻，于是变高端了，买了把会响笛的那种水壶。水开之后，能大声发出嘀~~~~的噪音。</li>
+<li>老张把响水壶放到火上，立等水开。（异步阻塞）<br>
+老张觉得这样傻等意义不大</li>
+<li>老张把响水壶放到火上，去客厅看电视，水壶响之前不再去看它了，响了再去拿壶。（异步非阻塞）老张觉得自己聪明了。</li>
+</ol>
+<p>所谓同步异步，只是对于水壶而言。普通水壶，同步；响水壶，异步。虽然都能干活，但响水壶可以在自己完工之后，提示老张水开了。这是普通水壶所不能及的。同步只能让调用者去轮询自己（情况 2 中），造成老张效率的低下。<br>
+所谓阻塞非阻塞，仅仅对于老张而言。立等的老张，阻塞；看电视的老张，非阻塞。情况 1 和情况 3 中老张就是阻塞的，媳妇喊他都不知道。虽然 3 中响水壶是异步的，可对于立等的老张没有太大的意义。所以一般异步是配合非阻塞使用的，这样才能发挥异步的效用。</p>
+</blockquote>
+</section>
+<h4 id="什么是-事件驱动-？"><a class="header-anchor" href="#什么是-事件驱动-？"></a>什么是「事件驱动」？</h4>
+<section class="reference">
+<p>传统编程大部分是线性模式的，控制流程由输入数据和编写的程序决定；在知道这个程序当前的运行状态（包括输入数据和程序本身）的前提下，你就知道接下来甚至一直到结束它的运行流程。</p>
+<p>「事件驱动」是指在持续事务管理过程中，进行决策的一种策略，即跟随当前时间点上出现的事件，调动可用资源，执行相关任务，使不断出现的问题得以解决，防止事务堆积。事件驱动模式比较高冷，有个好莱坞原则：”不要打电话给我们，我们会打电话给你“。事件驱动程序在启动后会处于等待状态，会等待事件触发，然后执行响应函数。又被称为<code>I/O 多路复用</code>……</p>
+</section>
+<h5 id="⚠-前置基础概念"><a class="header-anchor" href="#⚠-前置基础概念"></a>⚠️ 前置基础概念</h5>
+<section class="reference">
+<ul>
+<li>进程地址空间（进程虚拟地址）
+<ul>
+<li>用户空间与内核空间（Linux）
+<ul>
+<li>内核可以访问受保护内存空间，也有访问底层所有设备的权限</li>
+<li>为了保证内核安全（保证用户进程不能直接操作内核），将虚拟空间划分为用户空间和内核空间</li>
+<li>32位操作系统：2^32 = 4GB；内核空间 1GB（从虚拟地址0xC0000000到0xFFFFFFFF），用户空间 3GB（从虚拟地址0x00000000到0xBFFFFFFF）</li>
+<li>64位操作系统：2^48（不需要64那么大、过大会导致资源浪费） = 256T；内核、用户空间分别占128T</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>进程切换（任何进程都在操作系统的内核支持下运行）
+<ul>
+<li>可以挂起在 CPU 上运行的进程
+<ul>
+<li>保存上下文（计数器、寄存器等）</li>
+<li>更新 PCB（进程控制块）信息</li>
+<li>把进程 PCB 移入相应的队列（就绪、在某事件阻塞等队列）</li>
+</ul>
+</li>
+<li>可以恢复以前挂起的进程
+<ul>
+<li>选择一个进程执行，更新其 PCB</li>
+<li>更新内存管理的数据结构</li>
+<li>恢复上下文</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>进程阻塞、唤醒
+<ul>
+<li>进程状态
+<ul>
+<li>运行态：进程获得 CPU 并运行</li>
+<li>就绪态：进程具备运行条件，但尚未获得 CPU</li>
+<li>阻塞态：进程因等待某事件发生而暂时不能运行</li>
+</ul>
+</li>
+<li>正在运行的进程，由于提出系统服务请求（如 I/O 操作）未得到系统的立即响应，该进程会调用阻塞原语把自己阻塞，等待相应事件出现后被唤醒</li>
+<li>只有处于获得 CPU 的进程才能将其转换为阻塞状态</li>
+<li>阻塞
+<ul>
+<li>请求系统服务、I/O 操作等未得到即时响应</li>
+<li>找到要被阻塞进程的标识号对应的 PCB</li>
+<li>停止执行</li>
+<li>若该进程为运行状态（获得 CPU），则保护现场，改变状态为阻塞状态</li>
+<li>把 PCB 插入相应阻塞队列</li>
+</ul>
+</li>
+<li>唤醒
+<ul>
+<li>阻塞原因期待的事件出现</li>
+<li>把被阻塞的进程移出阻塞队列</li>
+<li>将 PCB 状态改为就绪状态</li>
+<li>将 PCB 插入到就绪队列中</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>文件描述符（FD）（适用于 Unix、Linux；Windows 中通常叫 Handle）
+<ul>
+<li><strong>在 Linux 中，一切皆文件</strong>
+<ul>
+<li>对所有文件（目录、字符设备、块设备、套接字、打印机、进程、线程、管道等）操作，读写都可用fopen()/fclose()/fwrite()/fread()等函数进行处理</li>
+</ul>
+</li>
+<li>用于表述指向文件的引用的抽象化概念</li>
+<li>标准文件描述符
+<ul>
+<li>0：标准输入；1：标准输出；2：标准错误</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>缓存 I/O（标准I/O）
+<ul>
+<li>工作过程
+<ul>
+<li>Linux 中，操作系统会将 I/O 的数据缓存在文件系统的页缓存中
+<ul>
+<li>数据先被拷贝到操作系统内核缓冲区中</li>
+<li>再从内核缓冲区拷贝到应用程序地址空间</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>缺点：开销大</li>
+<li>基于缓存 I/O 出现的模型
+<ul>
+<li>阻塞 I/O</li>
+<li>非阻塞 I/O</li>
+<li>I/O 多路复用</li>
+<li>信号驱动 I/O（不常用）</li>
+<li>异步 I/O</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</section>
+<h5 id="i-o-多路复用"><a class="header-anchor" href="#i-o-多路复用"></a>I/O 多路复用</h5>
+<section class="reference">
+<p>I/O 多路复用就通过一种机制，可以监视多个描述符，一旦某个描述符就绪（一般是读就绪或者写就绪），能够通知程序进行相应的读写操作。</p>
+<div class="warning">
+<p>通常在 I/O 多路复用中（如 epoll），socket 需要设置为 no-blocking 模式，不然会出现问题 ↓<br>
+🌰你的「读 fd」需要读取 200 Byte 的数据才会返回，但是发送数据方只发送了 199 Byte，于是你的「读 fd」就一直处于阻塞状态，并最终导致 epoll 处于被阻塞状态？</p>
+</div>
+</section>
+<h4 id="什么是-libuv？"><a class="header-anchor" href="#什么是-libuv？"></a>什么是 libuv？</h4>
+<section class="reference"></section>
+<h5 id="libuv-架构图"><a class="header-anchor" href="#libuv-架构图"></a>libuv 架构图 ↓</h5>
+<section class="reference">
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="architecture.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<ul>
+<li>libuv 提供了不同的接口来操作网络 I/O、文件 I/O、DNS 相关函数以及用户代码</li>
+<li>网络 I/O 的处理，在不同平台下使用不同的异步模型
+<ul>
+<li>Linux – epoll</li>
+<li>OSX &amp; BSDs – kqueue</li>
+<li>Windows – IOCP</li>
+<li>SunOS – event ports</li>
+</ul>
+</li>
+<li>文件 I/O、DNS 函数及用户代码处理不依赖平台，直接使用线程池处理</li>
+</ul>
+</section>
+<h3 id="什么是-httptools？"><a class="header-anchor" href="#什么是-httptools？"></a>什么是 httptools？</h3>
 <section class="reference">
 <ul>
 <li>是 NodeJS HTTP 解析的 Python 实现</li>
@@ -268,6 +434,8 @@
 <h2 id="总结"><a class="header-anchor" href="#总结"></a>总结</h2>
 <section class="reference">
 <p>「我愿称你为最强」</p>
+<p><a href="https://scoolor.github.io/2018/11/08/linux-everything-is-file/" target="_blank" rel="noopener">https://scoolor.github.io/2018/11/08/linux-everything-is-file/</a></p>
+<p><a href="https://www.iminho.me/wiki/blog-23.html" target="_blank" rel="noopener">https://www.iminho.me/wiki/blog-23.html</a></p>
 </section>
 
         </div>
@@ -277,7 +445,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2020-04-20T10:03:10.134Z" itemprop="dateUpdated">2020-04-20 18:03:10</time>
+    最后更新时间：<time datetime="2020-04-21T10:07:18.031Z" itemprop="dateUpdated">2020-04-21 18:07:18</time>
 </span><br>
 
 
