@@ -30,7 +30,7 @@
 <meta name="keywords" content="K8S,Kubernetes,编排,高可用">
 <meta property="og:type" content="article">
 <meta property="og:title" content="高可用K8S搭建（Ubuntu18.04）">
-<meta property="og:url" content="http:&#x2F;&#x2F;lockeysama.gitee.io&#x2F;2020&#x2F;03&#x2F;11&#x2F;DevOps&#x2F;%E9%AB%98%E5%8F%AF%E7%94%A8K8S%E6%90%AD%E5%BB%BA&#x2F;index.html">
+<meta property="og:url" content="http:&#x2F;&#x2F;www.lockey.xyz&#x2F;2020&#x2F;03&#x2F;11&#x2F;DevOps&#x2F;%E9%AB%98%E5%8F%AF%E7%94%A8K8S%E6%90%AD%E5%BB%BA&#x2F;index.html">
 <meta property="og:site_name" content="Lockey">
 <meta property="og:description" content="本文资料整理自网络，对其中过时部分进行修正！ 运行环境为：KVM 虚拟机（先根据下文第一部分制作基础镜像，再用基础镜像克隆为各个 master、worker 节点，可以节省时间） 适用版本为： 操作系统：Ubuntu18.04 Kubeadm：GitVersion:&amp;quot;v1.17.3&amp;quot; K8S组件版本如下： kube-apiserver:v1.17.4 kube-control">
 <meta property="og:locale" content="zh-CN">
@@ -646,7 +646,7 @@ kubeadm join server.k8s.local:8443 --token ${TOKEN} --discovery-token-ca-cert-ha
     </div>
     
     <footer>
-        <a href="http://lockeysama.gitee.io">
+        <a href="http://www.lockey.xyz">
             <img src="/img/avatar.jpg" alt="Lockey">
             Lockey
         </a>
@@ -672,7 +672,7 @@ kubeadm join server.k8s.local:8443 --token ${TOKEN} --discovery-token-ca-cert-ha
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://lockeysama.gitee.io/2020/03/11/DevOps/%E9%AB%98%E5%8F%AF%E7%94%A8K8S%E6%90%AD%E5%BB%BA/&title=《高可用K8S搭建（Ubuntu18.04）》 — Lockey&pic=http://lockeysama.gitee.io/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.lockey.xyz/2020/03/11/DevOps/%E9%AB%98%E5%8F%AF%E7%94%A8K8S%E6%90%AD%E5%BB%BA/&title=《高可用K8S搭建（Ubuntu18.04）》 — Lockey&pic=http://www.lockey.xyz/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -682,22 +682,22 @@ kubeadm join server.k8s.local:8443 --token ${TOKEN} --discovery-token-ca-cert-ha
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://lockeysama.gitee.io/2020/03/11/DevOps/%E9%AB%98%E5%8F%AF%E7%94%A8K8S%E6%90%AD%E5%BB%BA/&title=《高可用K8S搭建（Ubuntu18.04）》 — Lockey&source=" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.lockey.xyz/2020/03/11/DevOps/%E9%AB%98%E5%8F%AF%E7%94%A8K8S%E6%90%AD%E5%BB%BA/&title=《高可用K8S搭建（Ubuntu18.04）》 — Lockey&source=" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://lockeysama.gitee.io/2020/03/11/DevOps/%E9%AB%98%E5%8F%AF%E7%94%A8K8S%E6%90%AD%E5%BB%BA/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.lockey.xyz/2020/03/11/DevOps/%E9%AB%98%E5%8F%AF%E7%94%A8K8S%E6%90%AD%E5%BB%BA/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《高可用K8S搭建（Ubuntu18.04）》 — Lockey&url=http://lockeysama.gitee.io/2020/03/11/DevOps/%E9%AB%98%E5%8F%AF%E7%94%A8K8S%E6%90%AD%E5%BB%BA/&via=http://lockeysama.gitee.io" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《高可用K8S搭建（Ubuntu18.04）》 — Lockey&url=http://www.lockey.xyz/2020/03/11/DevOps/%E9%AB%98%E5%8F%AF%E7%94%A8K8S%E6%90%AD%E5%BB%BA/&via=http://www.lockey.xyz" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://lockeysama.gitee.io/2020/03/11/DevOps/%E9%AB%98%E5%8F%AF%E7%94%A8K8S%E6%90%AD%E5%BB%BA/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.lockey.xyz/2020/03/11/DevOps/%E9%AB%98%E5%8F%AF%E7%94%A8K8S%E6%90%AD%E5%BB%BA/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -855,7 +855,7 @@ kubeadm join server.k8s.local:8443 --token ${TOKEN} --discovery-token-ca-cert-ha
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://lockeysama.gitee.io/2020/03/11/DevOps/%E9%AB%98%E5%8F%AF%E7%94%A8K8S%E6%90%AD%E5%BB%BA/&title=《高可用K8S搭建（Ubuntu18.04）》 — Lockey&pic=http://lockeysama.gitee.io/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.lockey.xyz/2020/03/11/DevOps/%E9%AB%98%E5%8F%AF%E7%94%A8K8S%E6%90%AD%E5%BB%BA/&title=《高可用K8S搭建（Ubuntu18.04）》 — Lockey&pic=http://www.lockey.xyz/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -865,22 +865,22 @@ kubeadm join server.k8s.local:8443 --token ${TOKEN} --discovery-token-ca-cert-ha
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://lockeysama.gitee.io/2020/03/11/DevOps/%E9%AB%98%E5%8F%AF%E7%94%A8K8S%E6%90%AD%E5%BB%BA/&title=《高可用K8S搭建（Ubuntu18.04）》 — Lockey&source=" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.lockey.xyz/2020/03/11/DevOps/%E9%AB%98%E5%8F%AF%E7%94%A8K8S%E6%90%AD%E5%BB%BA/&title=《高可用K8S搭建（Ubuntu18.04）》 — Lockey&source=" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://lockeysama.gitee.io/2020/03/11/DevOps/%E9%AB%98%E5%8F%AF%E7%94%A8K8S%E6%90%AD%E5%BB%BA/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.lockey.xyz/2020/03/11/DevOps/%E9%AB%98%E5%8F%AF%E7%94%A8K8S%E6%90%AD%E5%BB%BA/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《高可用K8S搭建（Ubuntu18.04）》 — Lockey&url=http://lockeysama.gitee.io/2020/03/11/DevOps/%E9%AB%98%E5%8F%AF%E7%94%A8K8S%E6%90%AD%E5%BB%BA/&via=http://lockeysama.gitee.io" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《高可用K8S搭建（Ubuntu18.04）》 — Lockey&url=http://www.lockey.xyz/2020/03/11/DevOps/%E9%AB%98%E5%8F%AF%E7%94%A8K8S%E6%90%AD%E5%BB%BA/&via=http://www.lockey.xyz" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://lockeysama.gitee.io/2020/03/11/DevOps/%E9%AB%98%E5%8F%AF%E7%94%A8K8S%E6%90%AD%E5%BB%BA/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.lockey.xyz/2020/03/11/DevOps/%E9%AB%98%E5%8F%AF%E7%94%A8K8S%E6%90%AD%E5%BB%BA/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -891,7 +891,7 @@ kubeadm join server.k8s.local:8443 --token ${TOKEN} --discovery-token-ca-cert-ha
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;" target="_blank" rel="noopener"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPYAAAD2CAAAAADAeSUUAAADK0lEQVR42u3aS27jQAwFwNz/0g4wmEUAR9YjKQMWU1oZGf2qtXhDsr++4uPx7/j5+/k4uur5nMfLI7/D8++LD2xsbOybsJOXOHrp6ssly5Q/ZbKg2NjY2PvYvdDK4ydPk+STvF6a1xZsbGzsv8yuRkty7WQJ8rIEGxsbGzuPincEYbIc2NjY2NiT//TPF6U3fqguKzY2NvZWdi+EPvP32+fb2NjY2B/GfhSPJHJ6xUx1JNx7//93w8bGxl7EPgqAQmum2OKfDB7yUUEUb9jY2Ngr2JPNOtXGUJXd247T/M7Y2NjYt2VXT+013/OrqtGVPOXwKmxsbOwV7GpjKA+tPMaq95/0/8uri42Njf3x7GoLqYq8ipqcnwTqyXgAGxsb+4bsScsmb0Ilf+99gOaQABsbG3sRuxc8r2+X/GtS8MybVid1BzY2NvYidtKgmb9K9Sm9BlNz1xI2Njb2CnYveKpbcPJtQ3nbaNLGwsbGxt7Hrj4munUxlvLhQe/NsbGxsfex54OB3pm9oiWJzEiBjY2NvYJ91YaYeTmR97rm5Q02Njb2Jna1sX7tMDgpQpJAmgyesbGxse/O7vWfyis6KG/mA+By/wwbGxv7VuwkEqrj23zo23vWpKQ57KVhY2Nj35Y92QozCZVq/Ey26fxyJjY2NvY69lVFRRWQP6u6Qeck5LCxsbGXsidN/97v5On5chcWERsbG3s1u1dg5FHXW9CkKCp8TmxsbOxF7Lw9lLefqsOA3gA4+XvUGsPGxsa+Obva6MnZvS1Bk8FwYVGwsbGx17Hn+xLzAqZaKvRC9GRZsbGxsRexey9RLQ+SgOkVRdUmFDY2NvY+dq9UuIpULYF6jaRf7oONjY29jt3bajkJv7ycqI54o4IHGxsbex07P6566d61eayebBjCxsbGXsSehEEv6pIoyp813+6DjY2NvYNdDYx5Kz+PmWSx8gDDxsbG3s2eb9zpFSHVxZo3mLCxsbH/MrsaLZNwurbxNAowbGxs7HXsvCyZhFYPX/gk2NjY2OvYvWIgp1aHvr0tQW/ppWFjY2N/PHuykXHe7qkOiXvNLGxsbOyl7G8KvwirLyWYqwAAAABJRU5ErkJggg==" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPYAAAD2CAAAAADAeSUUAAADJ0lEQVR42u3aQXIiQQwEQP//0+wDMEOVhDegyTk5MExPNodCUv/8xNft7rr/7/07H90nX/H69eu1XnBhY2Njfwj7dnldvye5z/UjXt8zoSbP+cudsbGxsY9jJ4slWZDfM79DsqH1utjY2NjYo+hKgu36s9fPho2NjY2dsNsWUnufopzAxsbGxi6bSputeXSf2Yr/tZeGjY2N/fbsduz6zn//yXwbGxsb+43Zt/KafSoPsLZcGSqwsbGxD2LnAZAcuGkPX7YHetqh8pPnx8bGxj6C3QbMXwwJZgPjTcmEjY2N/W3sJMaS5TflShulT+6MjY2NfRw7+dG/H8TODgDtpx8Pe2nY2NjYR7DzkMibPrNgaxtP7QZhY2Njn83OW0JJGORFSNu0ul6rjUNsbGzsM9g5KR8PtIVHEnWzsmR4UgkbGxv7o9j5j/i80b/flFnrf5jb2NjY2EewZxGyGei2JU17DGg2SMDGxsb+XHZeEiTDgH0gbUa/xQADGxsb+yD2rNU+GyTkr+dHgvLCI/rOsbGxsT+Q3QZG+1j74qTd7uhpsbGxsQ9l568nkbY5cJlv3LDNhI2NjX0Eez+gzbemZcy2OPrysLGxsQ9i5wu0+E2h0sbnrI2FjY2NfQY7b9bMSpd2m/ZFSBTA2NjY2Mex97GRD4OvG0mzY6BtBGJjY2Ofyk4+PGskFQ+0aCQlsfpLgGFjY2Mfwc4b+jm+ZSQtrX15g42Njf0N7HZY2wbbpiyZDYOxsbGxz2bnkZA/+uadbasoL3WwsbGxv42dREu7ZDsk3pyTrM8oYWNjYx/EflXBsAmY2VUfKsLGxsY+jj0rS9rYyzd0WGDEZ3KwsbGxz2MnwZCHxKa0yIe4s63ExsbGPok9+7nftnVmLaTZRkcbhI2NjX0Qu10yLz/aKNpH5mY4gY2Njf3p7Dy0ZuXEplDJ10oCDBsbG/ts9uywzmzAsC9g2qYVNjY2NnZSJLQlyr5JlP/9ZL6NjY2N/WXsvA3UlhAbat0Ow8bGxj6O3Q5323Z/e+ekqMg/u+qlYWNjY789e3ZcJl/sVUOFfHh8/XViY2NjH8T+B2gX7pqPsVgdAAAAAElFTkSuQmCC" alt="微信分享二维码">
 </div>
 
 
