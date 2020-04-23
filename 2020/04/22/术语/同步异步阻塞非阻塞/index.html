@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+<!-- Baidu Tongji -->
+<script>var _hmt = _hmt || []</script>
+<script async src="//hm.baidu.com/hm.js?493a2f87364df67d7b0018c29a2cde1a"></script>
+<!-- End Baidu Tongji -->
+
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>同步/异步/阻塞/非阻塞、事件驱动、I/O 多路复用 | Lockey</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="同步,异步,阻塞,非阻塞,事件驱动,I/O 多路复用">
+    <meta name="description" content="鲁迅说  有异步就有同步，有非阻塞就有阻塞 组合可得：同步阻塞、同步不阻塞、异步阻塞、异步不阻塞  一个来自逼乎上的 🌰 ↓   老张爱喝茶，废话不说，煮开水。 出场人物：老张，水壶两把（普通水壶，简称水壶；会响的水壶，简称响水壶）。  老张把水壶放到火上，立等水开。（同步阻塞） 老张觉得自己有点傻 老张把水壶放到火上，去客厅看电视，时不时去厨房看看水开没有。（同步非阻塞） 老张还是觉得自己有点">
+<meta name="keywords" content="同步,异步,阻塞,非阻塞,事件驱动,I&#x2F;O 多路复用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="同步&#x2F;异步&#x2F;阻塞&#x2F;非阻塞、事件驱动、I&#x2F;O 多路复用">
+<meta property="og:url" content="http:&#x2F;&#x2F;www.lockey.xyz&#x2F;2020&#x2F;04&#x2F;22&#x2F;%E6%9C%AF%E8%AF%AD&#x2F;%E5%90%8C%E6%AD%A5%E5%BC%82%E6%AD%A5%E9%98%BB%E5%A1%9E%E9%9D%9E%E9%98%BB%E5%A1%9E&#x2F;index.html">
+<meta property="og:site_name" content="Lockey">
+<meta property="og:description" content="鲁迅说  有异步就有同步，有非阻塞就有阻塞 组合可得：同步阻塞、同步不阻塞、异步阻塞、异步不阻塞  一个来自逼乎上的 🌰 ↓   老张爱喝茶，废话不说，煮开水。 出场人物：老张，水壶两把（普通水壶，简称水壶；会响的水壶，简称响水壶）。  老张把水壶放到火上，立等水开。（同步阻塞） 老张觉得自己有点傻 老张把水壶放到火上，去客厅看电视，时不时去厨房看看水开没有。（同步非阻塞） 老张还是觉得自己有点">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-04-22T03:31:14.790Z">
+<meta name="twitter:card" content="summary">
+    
+        <link rel="alternate" type="application/atom+xml" title="Lockey" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+    
+    <meta name="baidu-site-verification" content="ZUtwl2HaDt" />
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off" target="">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Lockey</h5>
+          <a href="mailto:196349143@qq.com" target="_blank" rel="noopener" title="196349143@qq.com" class="mail">196349143@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/Lockeysama" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" target="_blank" rel="noopener" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">同步/异步/阻塞/非阻塞、事件驱动、I/O 多路复用</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" target="_blank" rel="noopener" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search" target="">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare" target="">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">同步/异步/阻塞/非阻塞、事件驱动、I/O 多路复用</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2020-04-22T03:16:56.000Z" itemprop="datePublished" class="page-time">
+  2020-04-22
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/%E6%9C%AF%E8%AF%AD/">术语</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#鲁迅说"><span class="post-toc-number">1.</span> <span class="post-toc-text">鲁迅说</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#一个来自逼乎上的-🌰"><span class="post-toc-number">1.0.0.1.</span> <span class="post-toc-text">一个来自逼乎上的 🌰 ↓</span></a></li></ol></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#什么是-事件驱动-？"><span class="post-toc-number">2.</span> <span class="post-toc-text">什么是「事件驱动」？</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-术语/同步异步阻塞非阻塞"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">同步/异步/阻塞/非阻塞、事件驱动、I/O 多路复用</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2020-04-22 11:16:56" datetime="2020-04-22T03:16:56.000Z"  itemprop="datePublished">2020-04-22</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/%E6%9C%AF%E8%AF%AD/">术语</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="鲁迅说"><a class="header-anchor" href="#鲁迅说"></a>鲁迅说</h2>
+<section class="reference">
+<p><strong>有异步就有同步，有非阻塞就有阻塞</strong><br>
+组合可得：同步阻塞、同步不阻塞、异步阻塞、异步不阻塞</p>
+</section>
+<h5 id="一个来自逼乎上的-🌰"><a class="header-anchor" href="#一个来自逼乎上的-🌰"></a>一个来自逼乎上的 🌰 ↓</h5>
+<section class="reference">
+<blockquote>
+<p>老张爱喝茶，废话不说，煮开水。<br>
+出场人物：老张，水壶两把（普通水壶，简称水壶；会响的水壶，简称响水壶）。</p>
+<ol>
+<li>老张把水壶放到火上，立等水开。（同步阻塞）<br>
+老张觉得自己有点傻</li>
+<li>老张把水壶放到火上，去客厅看电视，时不时去厨房看看水开没有。（同步非阻塞）<br>
+老张还是觉得自己有点傻，于是变高端了，买了把会响笛的那种水壶。水开之后，能大声发出嘀~~~~的噪音。</li>
+<li>老张把响水壶放到火上，立等水开。（异步阻塞）<br>
+老张觉得这样傻等意义不大</li>
+<li>老张把响水壶放到火上，去客厅看电视，水壶响之前不再去看它了，响了再去拿壶。（异步非阻塞）老张觉得自己聪明了。</li>
+</ol>
+<p>所谓同步异步，只是对于水壶而言。普通水壶，同步；响水壶，异步。虽然都能干活，但响水壶可以在自己完工之后，提示老张水开了。这是普通水壶所不能及的。同步只能让调用者去轮询自己（情况 2 中），造成老张效率的低下。<br>
+所谓阻塞非阻塞，仅仅对于老张而言。立等的老张，阻塞；看电视的老张，非阻塞。情况 1 和情况 3 中老张就是阻塞的，媳妇喊他都不知道。虽然 3 中响水壶是异步的，可对于立等的老张没有太大的意义。所以一般异步是配合非阻塞使用的，这样才能发挥异步的效用。</p>
+</blockquote>
+</section>
+<h2 id="什么是-事件驱动-？"><a class="header-anchor" href="#什么是-事件驱动-？"></a>什么是「事件驱动」？</h2>
+<section class="reference">
+<p>传统编程大部分是线性模式的，控制流程由输入数据和编写的程序决定；在知道这个程序当前的运行状态（包括输入数据和程序本身）的前提下，你就知道接下来甚至一直到结束它的运行流程。</p>
+<p>「事件驱动」是指在持续事务管理过程中，进行决策的一种策略，即跟随当前时间点上出现的事件，调动可用资源，执行相关任务，使不断出现的问题得以解决，防止事务堆积。事件驱动模式比较高冷，有个好莱坞原则：”不要打电话给我们，我们会打电话给你“。事件驱动程序在启动后会处于等待状态，会等待事件触发，然后执行响应函数。又被称为→ <a href="/2020/04/22/%E6%9C%AF%E8%AF%AD/IO%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8/" title="I&#x2F;O多路复用">I&#x2F;O多路复用</a> ←……</p>
+</section>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2020-04-22T03:31:14.790Z" itemprop="dateUpdated">2020-04-22 11:31:14</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="http://www.lockey.xyz">
+            <img src="/img/avatar.jpg" alt="Lockey">
+            Lockey
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light" target="">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/I-O-%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8/" rel="tag">I/O 多路复用</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E4%BA%8B%E4%BB%B6%E9%A9%B1%E5%8A%A8/" rel="tag">事件驱动</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%90%8C%E6%AD%A5/" rel="tag">同步</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%BC%82%E6%AD%A5/" rel="tag">异步</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%98%BB%E5%A1%9E/" rel="tag">阻塞</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%9D%9E%E9%98%BB%E5%A1%9E/" rel="tag">非阻塞</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.lockey.xyz/2020/04/22/%E6%9C%AF%E8%AF%AD/%E5%90%8C%E6%AD%A5%E5%BC%82%E6%AD%A5%E9%98%BB%E5%A1%9E%E9%9D%9E%E9%98%BB%E5%A1%9E/&title=《同步/异步/阻塞/非阻塞、事件驱动、I/O 多路复用》 — Lockey&pic=http://www.lockey.xyz/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" target="_blank" rel="noopener" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.lockey.xyz/2020/04/22/%E6%9C%AF%E8%AF%AD/%E5%90%8C%E6%AD%A5%E5%BC%82%E6%AD%A5%E9%98%BB%E5%A1%9E%E9%9D%9E%E9%98%BB%E5%A1%9E/&title=《同步/异步/阻塞/非阻塞、事件驱动、I/O 多路复用》 — Lockey&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.lockey.xyz/2020/04/22/%E6%9C%AF%E8%AF%AD/%E5%90%8C%E6%AD%A5%E5%BC%82%E6%AD%A5%E9%98%BB%E5%A1%9E%E9%9D%9E%E9%98%BB%E5%A1%9E/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《同步/异步/阻塞/非阻塞、事件驱动、I/O 多路复用》 — Lockey&url=http://www.lockey.xyz/2020/04/22/%E6%9C%AF%E8%AF%AD/%E5%90%8C%E6%AD%A5%E5%BC%82%E6%AD%A5%E9%98%BB%E5%A1%9E%E9%9D%9E%E9%98%BB%E5%A1%9E/&via=http://www.lockey.xyz" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.lockey.xyz/2020/04/22/%E6%9C%AF%E8%AF%AD/%E5%90%8C%E6%AD%A5%E5%BC%82%E6%AD%A5%E9%98%BB%E5%A1%9E%E9%9D%9E%E9%98%BB%E5%A1%9E/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" target="" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2020/04/22/%E6%9C%AF%E8%AF%AD/IO%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">I/O 多路复用 -- epoll</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2020/04/22/%E6%9C%AF%E8%AF%AD/Web%E6%9C%8D%E5%8A%A1/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Web 服务的基础概念</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="comments" id="comments">
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+        var id = location.pathname
+        if (location.pathname.length > 50) {
+          id = location.pathname.replace(/\/\d+\/\d+\/\d+\//, '').replace('/', '').substring(0, 50)
+        }
+        const gitalk = new Gitalk({
+          clientID: 'd3fa7d2ac1b4bf641e09',
+          clientSecret: '9b3c0342a36274f142db4652376ea42260ed4766',
+          repo: 'lockey.github.io',
+          owner: 'Lockeysama',
+          admin: ['Lockeysama'],
+          id: id,      // Ensure uniqueness and length less than 50
+          title: document.title.split('|')[0],
+          distractionFreeMode: false  // Facebook-like distraction free mode
+        })
+
+        gitalk.render('gitalk-container')
+    </script>
+</section>
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;" target=""><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Lockey &copy; 2019 - 2020</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" target="" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.lockey.xyz/2020/04/22/%E6%9C%AF%E8%AF%AD/%E5%90%8C%E6%AD%A5%E5%BC%82%E6%AD%A5%E9%98%BB%E5%A1%9E%E9%9D%9E%E9%98%BB%E5%A1%9E/&title=《同步/异步/阻塞/非阻塞、事件驱动、I/O 多路复用》 — Lockey&pic=http://www.lockey.xyz/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" target="_blank" rel="noopener" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.lockey.xyz/2020/04/22/%E6%9C%AF%E8%AF%AD/%E5%90%8C%E6%AD%A5%E5%BC%82%E6%AD%A5%E9%98%BB%E5%A1%9E%E9%9D%9E%E9%98%BB%E5%A1%9E/&title=《同步/异步/阻塞/非阻塞、事件驱动、I/O 多路复用》 — Lockey&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.lockey.xyz/2020/04/22/%E6%9C%AF%E8%AF%AD/%E5%90%8C%E6%AD%A5%E5%BC%82%E6%AD%A5%E9%98%BB%E5%A1%9E%E9%9D%9E%E9%98%BB%E5%A1%9E/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《同步/异步/阻塞/非阻塞、事件驱动、I/O 多路复用》 — Lockey&url=http://www.lockey.xyz/2020/04/22/%E6%9C%AF%E8%AF%AD/%E5%90%8C%E6%AD%A5%E5%BC%82%E6%AD%A5%E9%98%BB%E5%A1%9E%E9%9D%9E%E9%98%BB%E5%A1%9E/&via=http://www.lockey.xyz" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.lockey.xyz/2020/04/22/%E6%9C%AF%E8%AF%AD/%E5%90%8C%E6%AD%A5%E5%BC%82%E6%AD%A5%E9%98%BB%E5%A1%9E%E9%9D%9E%E9%98%BB%E5%A1%9E/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;" target="_blank" rel="noopener"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASYAAAEmCAAAAADqr2IGAAAElUlEQVR42u3ay27bMBAF0P7/T7tA0WXk3DujAKZyvApShyKPCnBef/7En9e/z9Xv3//r+2++ys/79ZMdXn3zhg8mTJgwYfpIpmRbVwe++mby+/fHnu0tgUh29cUKmDBhwoTpcKb2Ok9o8mu7XTMPXDZhBCZMmDBh+m1MeUAwu4Znr6RdBxMmTJgwYcoDgn2S3F7z96bcmDBhwoTp9zDde7nOtttSJu3SGSImTJgwYXoS0+xKfsbPPzjfhAkTJkyYPoDpVX5mJeA8zU7Cjvblbc77fx1MmDBhwnQsUz7sMivLzlqJ7Zr5+M5qV5gwYcKE6UCm/LLPA4LNqE1SDm73kJ8lipswYcKECdNRTJvrf8Z0b/m4TW7ztusXz8KECRMmTAcybYq5CcGmmLthSsrNxcqYMGHChOlYprzIexdfPgaar59D5CtclnoxYcKECdNRTIlifklvxndyuLZkPGuFYsKECROmJzG14zvR0uWVnL+G4njxU77ZOSZMmDBhOpYpf0xe+fyJdDofA2qJ28ACEyZMmDA9j2m2aNK2zNPRthA8KwpHrVlMmDBhwnQUU9tWzEdkZq3KNt3NUWZkmDBhwoTpdKakGblpQ+5Dgc132vS4DgswYcKECdOxTG1TcxNStMXl/MCzcZ/LXWHChAkTpgOZZglqfvHfVSzOn7IZ7rn8GRMmTJgwHcuUp4h5enzvuEyeKuc7maXKmDBhwoTpRKb2Im/bnO03c+7h/4jZMBAmTJgwYXooU35V56M2s4t/MxLUjvXUi2LChAkTpo9nakuf+6u6LSgncO3rLEaRMGHChAnTsUybi7M92GyI595AZFU4xoQJEyZMhzO1hdf2qHnxN3/uJtmuy9OYMGHChOlApnykJql/tuMys5Ggth67CXSK94MJEyZMmD6eKQ8LZkXStvzavra21FuEJpgwYcKE6XFM+8s1DyPylDVvYd71ejBhwoQJ0+lM71t9bcF0NhyTHP79Dmevp31tmDBhwoTpXKacLD9G2+ZsIdrrPG9nYsKECROmJzHtG4f51vPkM2835gXfVSiDCRMmTJgewdS2ANuUOL/CZ4dsi7n5IBEmTJgwYTqd6a6kd98KzVuY+xWK9i0mTJgwYTqcqU0vZw3IewOF9lKfBT2YMGHChOl0puT6b489ayvuC777MZ1vWDFhwoQJ04FM917bd7Uwc8Tk8PmeL3eICRMmTJgexNReopvWZl5KnqG3RedvKgSYMGHChOlwphlK9Jj459nTX/Enb9Zepr6YMGHChOkophxoFi604z4tQduCzZ/1zV9hwoQJE6ZDmF7lZ3Nh5wXWPOnNr/a2nTmMODBhwoQJ04cxzZLYtpi7KdHmQzZtcNMOIWHChAkTpnOZ8iAgSSzzB7cBQVKunaXTUTCBCRMmTJgOZ0qakW1TcBZM5IFIntzeUAvHhAkTJky/gCkfr2kbkPmaefK8b6NGRQNMmDBhwvQ4plnZdPa3m5bkptmZyWHChAkTppOYZsM6s6GfthQ7a7smJeOifIwJEyZMmI5l2gzuzIKATdiRv5IkCBhyYMKECROmM5j+AkIL3j9/cYfPAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+lazyScripts.push('//s95.cnzz.com/z_stat.php?id=1278306875&web_id=1278306875')
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '(～﹃～)~zZ';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '_(:з」∠)_';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+<!-- Baidu Tongji -->
+<script>var _hmt = _hmt || []</script>
+<script async src="//hm.baidu.com/hm.js?493a2f87364df67d7b0018c29a2cde1a"></script>
+<!-- End Baidu Tongji -->
+
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>内核网络数据收发流程 | Lockey</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="内核,网络数据收发">
+    <meta name="description" content="前置基础  → 操作系统基础 ← → Linux内核中断 ←  网卡（NIC）  网卡是一块被设计用来允许计算机在计算机网络上进行通讯的计算机硬件。由于其拥有 MAC 地址，因此属于 OSI 模型的第 2 层。它使得用户可以通过电缆或无线相互连接。每一个网卡都有一个被称为 MAC 地址的独一无二的48位串行号，它被写在卡上的一块 ROM 中。在网络上的每一个计算机都必须拥有一个独一无二的 MAC">
+<meta name="keywords" content="内核,网络数据收发">
+<meta property="og:type" content="article">
+<meta property="og:title" content="内核网络数据收发流程">
+<meta property="og:url" content="http:&#x2F;&#x2F;www.lockey.xyz&#x2F;2020&#x2F;04&#x2F;22&#x2F;%E5%9F%BA%E7%A1%80&#x2F;%E5%86%85%E6%A0%B8%E7%BD%91%E7%BB%9C%E6%95%B0%E6%8D%AE%E6%94%B6%E5%8F%91%E6%B5%81%E7%A8%8B&#x2F;index.html">
+<meta property="og:site_name" content="Lockey">
+<meta property="og:description" content="前置基础  → 操作系统基础 ← → Linux内核中断 ←  网卡（NIC）  网卡是一块被设计用来允许计算机在计算机网络上进行通讯的计算机硬件。由于其拥有 MAC 地址，因此属于 OSI 模型的第 2 层。它使得用户可以通过电缆或无线相互连接。每一个网卡都有一个被称为 MAC 地址的独一无二的48位串行号，它被写在卡上的一块 ROM 中。在网络上的每一个计算机都必须拥有一个独一无二的 MAC">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-04-23T02:30:09.587Z">
+<meta name="twitter:card" content="summary">
+    
+        <link rel="alternate" type="application/atom+xml" title="Lockey" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+    
+    <meta name="baidu-site-verification" content="ZUtwl2HaDt" />
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off" target="">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Lockey</h5>
+          <a href="mailto:196349143@qq.com" target="_blank" rel="noopener" title="196349143@qq.com" class="mail">196349143@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/Lockeysama" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" target="_blank" rel="noopener" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">内核网络数据收发流程</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" target="_blank" rel="noopener" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search" target="">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare" target="">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">内核网络数据收发流程</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2020-04-22T09:10:26.000Z" itemprop="datePublished" class="page-time">
+  2020-04-22
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/%E5%9F%BA%E7%A1%80/">基础</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#前置基础"><span class="post-toc-number">1.</span> <span class="post-toc-text">前置基础</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#网卡-nic"><span class="post-toc-number">2.</span> <span class="post-toc-text">网卡（NIC）</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#网卡驱动"><span class="post-toc-number">3.</span> <span class="post-toc-text">网卡驱动</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#网卡驱动处理数据的方式"><span class="post-toc-number">3.0.1.</span> <span class="post-toc-text">网卡驱动处理数据的方式</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#napi-主流"><span class="post-toc-number">3.0.1.1.</span> <span class="post-toc-text">NAPI（主流）</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#napi-的缺陷"><span class="post-toc-number">3.0.1.2.</span> <span class="post-toc-text">NAPI 的缺陷</span></a></li></ol></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#收包流程"><span class="post-toc-number">3.0.2.</span> <span class="post-toc-text">收包流程</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#🌰-socket-程序运行流程"><span class="post-toc-number">4.</span> <span class="post-toc-text">🌰 socket 程序运行流程</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-基础/内核网络数据收发流程"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">内核网络数据收发流程</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2020-04-22 17:10:26" datetime="2020-04-22T09:10:26.000Z"  itemprop="datePublished">2020-04-22</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/%E5%9F%BA%E7%A1%80/">基础</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="前置基础"><a class="header-anchor" href="#前置基础"></a>前置基础</h2>
+<section class="reference">
+<p>→ <a href="/2020/04/22/%E5%9F%BA%E7%A1%80/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%9F%BA%E7%A1%80/" title="操作系统基础">操作系统基础</a> ←<br>
+→ <a href="/2020/04/22/%E5%9F%BA%E7%A1%80/Linux%E5%86%85%E6%A0%B8%E4%B8%AD%E6%96%AD/" title="Linux内核中断">Linux内核中断</a> ←</p>
+</section>
+<h2 id="网卡-nic"><a class="header-anchor" href="#网卡-nic"></a>网卡（NIC）</h2>
+<section class="reference">
+<p>网卡是一块被设计用来<strong><em>允许计算机在计算机网络上进行通讯的计算机硬件</em></strong>。由于其拥有 MAC 地址，因此属于 OSI 模型的第 2 层。它使得用户可以通过电缆或无线相互连接。每一个网卡都有一个被称为 MAC 地址的独一无二的48位串行号，它被写在卡上的一块 ROM 中。在网络上的每一个计算机都必须拥有一个独一无二的 MAC 地址。没有任何两块被生产出来的网卡拥有同样的地址。这是因为电气电子工程师协会（IEEE）负责为网络接口控制器（网卡）销售商分配唯一的 MAC 地址。</p>
+</section>
+<h2 id="网卡驱动"><a class="header-anchor" href="#网卡驱动"></a>网卡驱动</h2>
+<section class="reference">
+<p>驱动程序（Device Driver）全称为“设备驱动程序”，是一种可以使计算机中央处理器—— CPU 控制和使用设备的特殊程序，相当于硬件的接口，操作系统通过这个接口，控制硬件设备的工作。所有的硬件都要安装驱动程序，没有驱动程序的硬件是运行不了的，就像一辆有轮胎但是没有传动轴的汽车一样跑不起来，控制不了。假如某设备的驱动程序未能正确安装，便不能正常工作。</p>
+<p>「网卡驱动」程序就是 CPU 控制和使用网卡的程序。</p>
+</section>
+<h4 id="网卡驱动处理数据的方式"><a class="header-anchor" href="#网卡驱动处理数据的方式"></a>网卡驱动处理数据的方式</h4>
+<section class="reference"></section>
+<h5 id="napi-主流"><a class="header-anchor" href="#napi-主流"></a>NAPI（主流）</h5>
+<section class="reference">
+<p>NAPI 是「中断」和「轮询」的结合体，避开了单轮询的无效做功和单中断的数据量大时频繁中断的消耗。在数据量少是使用中断，数据量多时使用轮询。平时是中断模式，当有数据到达时，会触发中断处理函数，中断处理函数关闭中断开始处理，此时再有数据过来，就不会触发中断，因为中断处理函数中会采用轮询的方式处理数据，直到没有新数据才重新打开中断。</p>
+</section>
+<h5 id="napi-的缺陷"><a class="header-anchor" href="#napi-的缺陷"></a>NAPI 的缺陷</h5>
+<section class="reference">
+<ol>
+<li>不能及时处理数据包</li>
+<li>数据到达速度增加会使内存消耗增加</li>
+<li>在大数据包，但是低速的情况下，接收中断会急剧增加，造成效率急剧下降</li>
+</ol>
+</section>
+<h4 id="收包流程"><a class="header-anchor" href="#收包流程"></a>收包流程</h4>
+<section class="reference">
+<ol>
+<li>网卡到内存
+<ol>
+<li>数据包从网络进入网卡
+<ol>
+<li>目标地址是本网卡：跳转到 1.2</li>
+<li>目标地址不是本网卡
+<ol>
+<li>开启混杂模式：跳转到 1.2</li>
+<li>未开始混杂魔兽：丢弃该网络包</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>网卡将数据包通过 DMA（Direct Memory Access，直接存储器访问）方式写入指定内存地址（该地址由网卡驱动分配并初始化）</li>
+<li>网卡通过 IRQ（硬件中断）通知 CPU</li>
+<li>CPU 根据中断表，调用已注册的中断函数（中断函数会调用驱动中相应的函数）</li>
+<li>驱动先禁用网卡中的中断，再告诉网卡下次接收到数据直接写入内存，不再通知 CPU（避免 CPU 接收大量中断）</li>
+<li>启动软中断</li>
+</ol>
+</li>
+<li>内核网络模块
+<ol>
+<li>内核中的 ksoftirqd 进程负责处理软中断，当收到软中断后，会调用对应的软中断处理函数（1.6 中抛出的软中断，会调用网络模块的处理函数）</li>
+<li>网络模块中的函数会调用驱动里的轮询函数来一个一个的处理数据包
+<ol>
+<li>驱动会一个一个的读取网卡写到内存中的数据包</li>
+<li>驱动程序将内存中的数据包转换成内核网络模块能识别的套接字缓存格式</li>
+<li>然后调用 GRO 相关函数，最终将数据放入 CPU 的队列中（如果队列满了，会被丢弃）</li>
+</ol>
+</li>
+<li>CPU 接着处理自己的软中断上下文中的队列里的数据</li>
+<li>待内存中所有数据被处理完后，启用网卡硬中断</li>
+</ol>
+</li>
+</ol>
+</section>
+<h2 id="🌰-socket-程序运行流程"><a class="header-anchor" href="#🌰-socket-程序运行流程"></a>🌰 socket 程序运行流程</h2>
+<section class="reference">
+<ul>
+<li>在 socket 程序中，程序执行到 recv 函数时， 进程进入「阻塞」状态（被放入内核等待队列，暂停执行后续代码）</li>
+<li>待网卡接收到数据
+<ul>
+<li>将合适的数据写入指定内存</li>
+<li>触发硬中断并调用驱动里的处理函数，函数禁用网卡硬中断并让网卡下次接收到数据直接写入内存</li>
+<li>启用软中断</li>
+</ul>
+</li>
+<li>内核负责软中断处理的的代码开始执行
+<ul>
+<li>调用驱动处理内存中的数据</li>
+<li>数据处理完后启用硬中断</li>
+<li>数据被送入协议栈</li>
+</ul>
+</li>
+<li>内核根据数据中的端口信息等得出了数据属于哪个 socket</li>
+<li>再根据 socket fd 得出资源所属进程</li>
+<li>该进程被内核重新放入就「绪队」列等待分配 CPU
+<ul>
+<li>进程得到 CPU 使用权后，进入「运行」状态，继续处理 recv 后的代码</li>
+</ul>
+</li>
+</ul>
+<p><strong><em>参考链接</em></strong><br>
+<a href="https://zhuanlan.zhihu.com/p/63179839" target="_blank" rel="noopener">如果这篇文章说不清epoll的本质，那就过来掐死我吧！</a><br>
+<a href="https://www.cnblogs.com/xiaomayi-cyj/p/10543027.html" target="_blank" rel="noopener">DPDK（二）：准备知识9 — Linux内核收报流程</a></p>
+</section>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2020-04-23T02:30:09.587Z" itemprop="dateUpdated">2020-04-23 10:30:09</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="http://www.lockey.xyz">
+            <img src="/img/avatar.jpg" alt="Lockey">
+            Lockey
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light" target="">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%86%85%E6%A0%B8/" rel="tag">内核</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C%E6%95%B0%E6%8D%AE%E6%94%B6%E5%8F%91/" rel="tag">网络数据收发</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.lockey.xyz/2020/04/22/%E5%9F%BA%E7%A1%80/%E5%86%85%E6%A0%B8%E7%BD%91%E7%BB%9C%E6%95%B0%E6%8D%AE%E6%94%B6%E5%8F%91%E6%B5%81%E7%A8%8B/&title=《内核网络数据收发流程》 — Lockey&pic=http://www.lockey.xyz/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" target="_blank" rel="noopener" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.lockey.xyz/2020/04/22/%E5%9F%BA%E7%A1%80/%E5%86%85%E6%A0%B8%E7%BD%91%E7%BB%9C%E6%95%B0%E6%8D%AE%E6%94%B6%E5%8F%91%E6%B5%81%E7%A8%8B/&title=《内核网络数据收发流程》 — Lockey&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.lockey.xyz/2020/04/22/%E5%9F%BA%E7%A1%80/%E5%86%85%E6%A0%B8%E7%BD%91%E7%BB%9C%E6%95%B0%E6%8D%AE%E6%94%B6%E5%8F%91%E6%B5%81%E7%A8%8B/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《内核网络数据收发流程》 — Lockey&url=http://www.lockey.xyz/2020/04/22/%E5%9F%BA%E7%A1%80/%E5%86%85%E6%A0%B8%E7%BD%91%E7%BB%9C%E6%95%B0%E6%8D%AE%E6%94%B6%E5%8F%91%E6%B5%81%E7%A8%8B/&via=http://www.lockey.xyz" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.lockey.xyz/2020/04/22/%E5%9F%BA%E7%A1%80/%E5%86%85%E6%A0%B8%E7%BD%91%E7%BB%9C%E6%95%B0%E6%8D%AE%E6%94%B6%E5%8F%91%E6%B5%81%E7%A8%8B/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" target="" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2020/04/22/%E5%9F%BA%E7%A1%80/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%9F%BA%E7%A1%80/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">操作系统基础</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2020/04/22/%E6%9C%AF%E8%AF%AD/IO%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">I/O 多路复用 -- epoll</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="comments" id="comments">
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+        var id = location.pathname
+        if (location.pathname.length > 50) {
+          id = location.pathname.replace(/\/\d+\/\d+\/\d+\//, '').replace('/', '').substring(0, 50)
+        }
+        const gitalk = new Gitalk({
+          clientID: 'd3fa7d2ac1b4bf641e09',
+          clientSecret: '9b3c0342a36274f142db4652376ea42260ed4766',
+          repo: 'lockey.github.io',
+          owner: 'Lockeysama',
+          admin: ['Lockeysama'],
+          id: id,      // Ensure uniqueness and length less than 50
+          title: document.title.split('|')[0],
+          distractionFreeMode: false  // Facebook-like distraction free mode
+        })
+
+        gitalk.render('gitalk-container')
+    </script>
+</section>
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;" target=""><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Lockey &copy; 2019 - 2020</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" target="" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.lockey.xyz/2020/04/22/%E5%9F%BA%E7%A1%80/%E5%86%85%E6%A0%B8%E7%BD%91%E7%BB%9C%E6%95%B0%E6%8D%AE%E6%94%B6%E5%8F%91%E6%B5%81%E7%A8%8B/&title=《内核网络数据收发流程》 — Lockey&pic=http://www.lockey.xyz/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" target="_blank" rel="noopener" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.lockey.xyz/2020/04/22/%E5%9F%BA%E7%A1%80/%E5%86%85%E6%A0%B8%E7%BD%91%E7%BB%9C%E6%95%B0%E6%8D%AE%E6%94%B6%E5%8F%91%E6%B5%81%E7%A8%8B/&title=《内核网络数据收发流程》 — Lockey&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.lockey.xyz/2020/04/22/%E5%9F%BA%E7%A1%80/%E5%86%85%E6%A0%B8%E7%BD%91%E7%BB%9C%E6%95%B0%E6%8D%AE%E6%94%B6%E5%8F%91%E6%B5%81%E7%A8%8B/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《内核网络数据收发流程》 — Lockey&url=http://www.lockey.xyz/2020/04/22/%E5%9F%BA%E7%A1%80/%E5%86%85%E6%A0%B8%E7%BD%91%E7%BB%9C%E6%95%B0%E6%8D%AE%E6%94%B6%E5%8F%91%E6%B5%81%E7%A8%8B/&via=http://www.lockey.xyz" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.lockey.xyz/2020/04/22/%E5%9F%BA%E7%A1%80/%E5%86%85%E6%A0%B8%E7%BD%91%E7%BB%9C%E6%95%B0%E6%8D%AE%E6%94%B6%E5%8F%91%E6%B5%81%E7%A8%8B/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;" target="_blank" rel="noopener"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASYAAAEmCAAAAADqr2IGAAAEkklEQVR42u3aS27bQBAFQN//0g6QVYyA8nvdNKJhSitBpofD4qI/0x8f8efz9+fP73/+8veVV9dc/dfrv16t83r9q5283sPqgwkTJkyY3pLp8+Xn6vb5412tlqzZ7q1FT9bHhAkTJkzPYEqWm4X8nCO/e56stPu5/B0TJkyYMP0HTDnKLJDPrmnJMGHChAkTpjYk39vqzZu8ycPfVjZjwoQJE6bDmZLl2t/b7+1B6QbrB3vhmDBhwoTpzZhmgzvP+P7j802YMGHChOmfMn3e9GkL1KQ1PGsZvyYYPh0mTJgwYTqWKb9BGzfzlGKWiOR3TIrhaFeYMGHChOlApjxIbw4sZ6E6OmIcHcfm/3uZN2HChAkTpqOY2u22EHm5OztonI3s5NdgwoQJE6bTmdriMD8mnDVk2/u2rzDh/vILJkyYMGE6likpAtuBmDwk58eisxK3TXeiZAgTJkyYMB3LdNdybdjeHKO2I0SzYSNMmDBhwnQuU36Q2Y7abIJukjQkjdq8pRvlSpgwYcKE6VimNtDmrds2XYjarKNRntUwECZMmDBhegRTXojmAXs4KFOWrLMxo+JKTJgwYcL0CKY2bCebbg8vZ+lFknasEgtMmDBhwnQs00+E6k0rOX+MfUIwPEzFhAkTJkxHMSUN3LbxmqcXeRM5Ty/aZ4kQMWHChAnT4Uz3Frf7cD5jzQ9o6xQBEyZMmDAdy5QfOs621Y7gzMj2CUpUlmPChAkTpgOZZoM7SaBd9ZsXbeUN5Td5EyZMmDBhegRTvq22YN5XkcnK++e6eTlMmDBhwvQGTHlwzVOBtgye4ea/J98v18SECRMmTIcz5UXsPr24q8nbpgttkoEJEyZMmJ7HNDsOnHHn983XmR27Ri8SEyZMmDAdy9RuLi8d2zZx/sCv109eSX4lJkyYMGE6nSm3bJu8s5HTzXnirESP2tOYMGHChOlYpk1YzYP37Bgyf3l54d3eBRMmTJgwPYNp9gCbqnDThN3fvS2/MWHChAnTuUyzwjUPn5s1Z4lF2ziOXh4mTJgwYTqWKV/iruxjNojTtn3blxrtARMmTJgwHcu0b5u2G9pfs/m9LbYxYcKECdO5TG0RmzdhN8M0edKwSUEKPkyYMGHCdCzTrFHblpr7cdV8QLZ9hcOUAhMmTJgwHcLUBsufCLpRAC5f510vcvh4mDBhwoTpLZn2gfaucnq2q01J/A0WJkyYMGF6BNOmkZqkBe0oah6821SmGEvFhAkTJkwPYsq30h4H7gduZqnDa5Rk2Cga3MGECRMmTG/MlAAlobQNsXkIT9bMU41Z+xgTJkyYMJ3L9Fl+2sPIdognCdLt9ZtBoi95EyZMmDBhOpBpFiZno6WzEdV28HTGsUkgMGHChAnT+zO1SUC+0Vn5uj+YnOHWjV1MmDBhwnQU0ywJaKGHJeVoZOfmXjgmTJgwYfpvmNpDyrY8fo3Svrb2Sb851MSECRMmTI9matupedl8V5GcJyVtGxoTJkyYMJ3ONLvBvZQ52SzJWDWXMWHChAnTsUyz1me73ZbjhrbsaOUVGSZMmDBhei+mX60lqNrkywlgAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+lazyScripts.push('//s95.cnzz.com/z_stat.php?id=1278306875&web_id=1278306875')
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '(～﹃～)~zZ';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '_(:з」∠)_';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>
