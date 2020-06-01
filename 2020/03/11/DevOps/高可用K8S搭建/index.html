@@ -34,7 +34,7 @@
 <meta property="og:site_name" content="Lockey">
 <meta property="og:description" content="本文资料整理自网络，对其中过时部分进行修正！ 运行环境为：KVM 虚拟机（先根据下文第一部分制作基础镜像，再用基础镜像克隆为各个 master、worker 节点，可以节省时间） 适用版本为： 操作系统：Ubuntu18.04 Kubeadm：GitVersion:&amp;quot;v1.17.3&amp;quot; K8S组件版本如下： kube-apiserver:v1.17.4 kube-control">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-03-18T03:44:35.704Z">
+<meta property="og:updated_time" content="2020-06-01T01:27:45.638Z">
 <meta name="twitter:card" content="summary">
     
         <link rel="alternate" type="application/atom+xml" title="Lockey" href="/atom.xml">
@@ -601,15 +601,10 @@ As a safeguard, uploaded-certs will be deleted in two hours; If necessary, you c
 –discovery-token-ca-cert-hash sha256:afd406ce180ce4c9271c0e7b4c3381df72cd75e766f934fd439d101ae1022a43<font></p>
 <div class="warning">
 <p>以上命令中出现的 hash、key 需要跟使用者安装后出现的一致，不可直接复制使用！<br>
-Token 失效可以使用命令重新生成 ↓<br>
-创建一个新的token：<br>
-kubeadm token create<br>
-查看token列表：<br>
-kubeadm token list<br>
-获取ca证书sha256编码hash值：<br>
-openssl x509 -pubkey -in /etc/kubernetes/pki/ca.crt | openssl rsa -pubin -outform der 2&gt;/dev/null | openssl dgst -sha256 -hex | sed 's/^.* //'<br>
-最终生成的cmd：<br>
-kubeadm join server.k8s.local:8443 --token ${TOKEN} --discovery-token-ca-cert-hash sha256:${CaSHA256}</p>
+Token 失效(24小时)可以使用命令重新生成 ↓<br>
+<code>kubeadm token create --print-join-command</code></p>
+<p>Master（–control-plane --certificate-key）（2小时失效）↓<br>
+<code>kubeadm init phase upload-certs --upload-certs --config kubeadm-config.yaml</code></p>
 </div>
 </section>
 <h5 id="master-测试"><a class="header-anchor" href="#master-测试"></a>master 测试</h5>
@@ -638,7 +633,7 @@ kubeadm join server.k8s.local:8443 --token ${TOKEN} --discovery-token-ca-cert-ha
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2020-03-18T03:44:35.704Z" itemprop="dateUpdated">2020-03-18 11:44:35</time>
+    最后更新时间：<time datetime="2020-06-01T01:27:45.638Z" itemprop="dateUpdated">2020-06-01 09:27:45</time>
 </span><br>
 
 
