@@ -25,16 +25,16 @@
     <meta name="theme-color" content="#3F51B5">
     
     
-    <meta name="keywords" content="同步,异步,阻塞,非阻塞,事件驱动,I/O 多路复用">
+    <meta name="keywords" content="I/O多路复用,同步,异步,阻塞,非阻塞,事件驱动">
     <meta name="description" content="鲁迅说  有异步就有同步，有非阻塞就有阻塞 组合可得：同步阻塞、同步不阻塞、异步阻塞、异步不阻塞  一个来自逼乎上的 🌰 ↓   老张爱喝茶，废话不说，煮开水。 出场人物：老张，水壶两把（普通水壶，简称水壶；会响的水壶，简称响水壶）。  老张把水壶放到火上，立等水开。（同步阻塞） 老张觉得自己有点傻 老张把水壶放到火上，去客厅看电视，时不时去厨房看看水开没有。（同步非阻塞） 老张还是觉得自己有点">
-<meta name="keywords" content="同步,异步,阻塞,非阻塞,事件驱动,I&#x2F;O 多路复用">
+<meta name="keywords" content="I&#x2F;O多路复用,同步,异步,阻塞,非阻塞,事件驱动">
 <meta property="og:type" content="article">
 <meta property="og:title" content="同步&#x2F;异步&#x2F;阻塞&#x2F;非阻塞、事件驱动、I&#x2F;O 多路复用">
 <meta property="og:url" content="http:&#x2F;&#x2F;www.lockey.xyz&#x2F;2020&#x2F;04&#x2F;22&#x2F;%E6%9C%AF%E8%AF%AD&#x2F;%E5%90%8C%E6%AD%A5%E5%BC%82%E6%AD%A5%E9%98%BB%E5%A1%9E%E9%9D%9E%E9%98%BB%E5%A1%9E&#x2F;index.html">
 <meta property="og:site_name" content="Lockey">
 <meta property="og:description" content="鲁迅说  有异步就有同步，有非阻塞就有阻塞 组合可得：同步阻塞、同步不阻塞、异步阻塞、异步不阻塞  一个来自逼乎上的 🌰 ↓   老张爱喝茶，废话不说，煮开水。 出场人物：老张，水壶两把（普通水壶，简称水壶；会响的水壶，简称响水壶）。  老张把水壶放到火上，立等水开。（同步阻塞） 老张觉得自己有点傻 老张把水壶放到火上，去客厅看电视，时不时去厨房看看水开没有。（同步非阻塞） 老张还是觉得自己有点">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-04-22T03:31:14.790Z">
+<meta property="og:updated_time" content="2020-06-19T06:15:01.439Z">
 <meta name="twitter:card" content="summary">
     
         <link rel="alternate" type="application/atom+xml" title="Lockey" href="/atom.xml">
@@ -226,7 +226,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2020-04-22T03:31:14.790Z" itemprop="dateUpdated">2020-04-22 11:31:14</time>
+    最后更新时间：<time datetime="2020-06-19T06:15:01.439Z" itemprop="dateUpdated">2020-06-19 14:15:01</time>
 </span><br>
 
 
@@ -250,7 +250,7 @@
 
         <div class="post-footer">
             
-	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/I-O-%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8/" rel="tag">I/O 多路复用</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E4%BA%8B%E4%BB%B6%E9%A9%B1%E5%8A%A8/" rel="tag">事件驱动</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%90%8C%E6%AD%A5/" rel="tag">同步</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%BC%82%E6%AD%A5/" rel="tag">异步</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%98%BB%E5%A1%9E/" rel="tag">阻塞</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%9D%9E%E9%98%BB%E5%A1%9E/" rel="tag">非阻塞</a></li></ul>
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/I-O%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8/" rel="tag">I/O多路复用</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E4%BA%8B%E4%BB%B6%E9%A9%B1%E5%8A%A8/" rel="tag">事件驱动</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%90%8C%E6%AD%A5/" rel="tag">同步</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%BC%82%E6%AD%A5/" rel="tag">异步</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%98%BB%E5%A1%9E/" rel="tag">阻塞</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%9D%9E%E9%98%BB%E5%A1%9E/" rel="tag">非阻塞</a></li></ul>
 
 
             

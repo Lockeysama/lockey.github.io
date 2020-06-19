@@ -113,7 +113,7 @@
     <link href="http://www.lockey.xyz/2020/04/22/%E6%9C%AF%E8%AF%AD/%E5%90%8C%E6%AD%A5%E5%BC%82%E6%AD%A5%E9%98%BB%E5%A1%9E%E9%9D%9E%E9%98%BB%E5%A1%9E/"/>
     <id>http://www.lockey.xyz/2020/04/22/%E6%9C%AF%E8%AF%AD/%E5%90%8C%E6%AD%A5%E5%BC%82%E6%AD%A5%E9%98%BB%E5%A1%9E%E9%9D%9E%E9%98%BB%E5%A1%9E/</id>
     <published>2020-04-22T03:16:56.000Z</published>
-    <updated>2020-04-22T03:31:14.790Z</updated>
+    <updated>2020-06-19T06:15:01.439Z</updated>
     
     <content type="html"><![CDATA[<h2 id="鲁迅说"><a class="header-anchor" href="#鲁迅说"></a>鲁迅说</h2><section class="reference"><p><strong>有异步就有同步，有非阻塞就有阻塞</strong><br>组合可得：同步阻塞、同步不阻塞、异步阻塞、异步不阻塞</p></section><h5 id="一个来自逼乎上的-🌰"><a class="header-anchor" href="#一个来自逼乎上的-🌰"></a>一个来自逼乎上的 🌰 ↓</h5><section class="reference"><blockquote><p>老张爱喝茶，废话不说，煮开水。<br>出场人物：老张，水壶两把（普通水壶，简称水壶；会响的水壶，简称响水壶）。</p><ol><li>老张把水壶放到火上，立等水开。（同步阻塞）<br>老张觉得自己有点傻</li><li>老张把水壶放到火上，去客厅看电视，时不时去厨房看看水开没有。（同步非阻塞）<br>老张还是觉得自己有点傻，于是变高端了，买了把会响笛的那种水壶。水开之后，能大声发出嘀~~~~的噪音。</li><li>老张把响水壶放到火上，立等水开。（异步阻塞）<br>老张觉得这样傻等意义不大</li><li>老张把响水壶放到火上，去客厅看电视，水壶响之前不再去看它了，响了再去拿壶。（异步非阻塞）老张觉得自己聪明了。</li></ol><p>所谓同步异步，只是对于水壶而言。普通水壶，同步；响水壶，异步。虽然都能干活，但响水壶可以在自己完工之后，提示老张水开了。这是普通水壶所不能及的。同步只能让调用者去轮询自己（情况 2 中），造成老张效率的低下。<br>所谓阻塞非阻塞，仅仅对于老张而言。立等的老张，阻塞；看电视的老张，非阻塞。情况 1 和情况 3 中老张就是阻塞的，媳妇喊他都不知道。虽然 3 中响水壶是异步的，可对于立等的老张没有太大的意义。所以一般异步是配合非阻塞使用的，这样才能发挥异步的效用。</p></blockquote></section><h2 id="什么是-事件驱动-？"><a class="header-anchor" href="#什么是-事件驱动-？"></a>什么是「事件驱动」？</h2><section class="reference"><p>传统编程大部分是线性模式的，控制流程由输入数据和编写的程序决定；在知道这个程序当前的运行状态（包括输入数据和程序本身）的前提下，你就知道接下来甚至一直到结束它的运行流程。</p><p>「事件驱动」是指在持续事务管理过程中，进行决策的一种策略，即跟随当前时间点上出现的事件，调动可用资源，执行相关任务，使不断出现的问题得以解决，防止事务堆积。事件驱动模式比较高冷，有个好莱坞原则：”不要打电话给我们，我们会打电话给你“。事件驱动程序在启动后会处于等待状态，会等待事件触发，然后执行响应函数。又被称为→ <a href="/2020/04/22/%E6%9C%AF%E8%AF%AD/IO%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8/" title="I&#x2F;O多路复用">I&#x2F;O多路复用</a> ←……</p></section>]]></content>
     
@@ -133,6 +133,8 @@
       <category term="术语" scheme="http://www.lockey.xyz/categories/%E6%9C%AF%E8%AF%AD/"/>
     
     
+      <category term="I/O多路复用" scheme="http://www.lockey.xyz/tags/I-O%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8/"/>
+    
       <category term="同步" scheme="http://www.lockey.xyz/tags/%E5%90%8C%E6%AD%A5/"/>
     
       <category term="异步" scheme="http://www.lockey.xyz/tags/%E5%BC%82%E6%AD%A5/"/>
@@ -143,8 +145,6 @@
     
       <category term="事件驱动" scheme="http://www.lockey.xyz/tags/%E4%BA%8B%E4%BB%B6%E9%A9%B1%E5%8A%A8/"/>
     
-      <category term="I/O 多路复用" scheme="http://www.lockey.xyz/tags/I-O-%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8/"/>
-    
   </entry>
   
   <entry>
@@ -152,7 +152,7 @@
     <link href="http://www.lockey.xyz/2020/04/22/%E6%9C%AF%E8%AF%AD/Web%E6%9C%8D%E5%8A%A1/"/>
     <id>http://www.lockey.xyz/2020/04/22/%E6%9C%AF%E8%AF%AD/Web%E6%9C%8D%E5%8A%A1/</id>
     <published>2020-04-22T02:54:43.000Z</published>
-    <updated>2020-04-22T02:56:00.684Z</updated>
+    <updated>2020-06-19T06:15:07.358Z</updated>
     
     <content type="html"><![CDATA[<h2 id="web-服务基础概念"><a class="header-anchor" href="#web-服务基础概念"></a>Web 服务基础概念</h2><section class="reference"><p>如果需要跑起一个普通的 Web 服务（网站、接口服务）， 一般需要有一台主机（云主机等），然后在主机上启动 <strong>Web 应用程序</strong>。</p><p>在 Python 中，大部分 Web 框架（Django、Flask等）自带的 Web 服务器性能较差，不适合在生产环境投入使用，这个问题的解决方案较多，目前使用较多的是使用专业的 <strong>HTTP 服务器（软件，如：Nginx、Apache、IIS等）</strong> 提供 Web 服务，用 <strong>服务器网关接口（WSGI）服务器</strong> 作为 HTTP 服务器和 Web 应用程序或框架之间的接口，构成一个完整的 Web 服务。</p></section><h3 id="什么是-web-应用程序？"><a class="header-anchor" href="#什么是-web-应用程序？"></a>什么是 Web 应用程序？</h3><section class="reference"><p>一个 Web 应用程序是由完成特定任务的各种 Web 组件构成，并通过 Web 将服务展示给外界。在实际应用中，Web 应用程序是由多个 Servlet、JSP 页面、HTML 文件以及图像文件等组成。所有这些组件相互协调为用户提供一组完整的服务。</p></section><h3 id="什么是-http-服务器？"><a class="header-anchor" href="#什么是-http-服务器？"></a>什么是 HTTP 服务器？</h3><section class="reference"><p>HTTP 服务器通常也叫 Web 服务器……（？？？黑人问号脸？？？）<br>它通过 HTTP 协议处理 Web 请求（接收和管理）。</p></section><h3 id="什么是-wsgi-服务器？"><a class="header-anchor" href="#什么是-wsgi-服务器？"></a>什么是 WSGI 服务器？</h3><section class="reference"><p>WSGI（Python Web Server Gateway Interface）基于 CGI（Common Gateway Interface） 标准设计，是为 Python 定义的 Web 服务器和 Web 应用程序或框架之间的一种简单而通用的接口（其他语言在这之后也出现类似的接口）。WSGI 服务器是基于 WSGI 协议实现的用来调用 Web 应用程序的服务器，另外，它也可以接收来自 HTTP 服务器的实现 WSGI 接口的请求数据，完美对接了 Web 应用程序和 HTTP 服务器的请求、数据交互。</p></section><h2 id="wsgi-的优缺点"><a class="header-anchor" href="#wsgi-的优缺点"></a>WSGI 的优缺点</h2><section class="reference"></section><h4 id="优点"><a class="header-anchor" href="#优点"></a>优点</h4><section class="reference"><ul><li>部署多样化</li><li>组件间高度解耦（任何一个符合 WSGI 规范的应用程序都可以部署在任何一个实现了 WSGI 规范的服务器上）</li></ul></section><h4 id="缺点"><a class="header-anchor" href="#缺点"></a>缺点</h4><section class="reference"><ul><li>无法处理 WebSocket、HTTP/2 一个 URL 多个请求的模式</li></ul></section><h2 id="继任者-asgi-异步服务器网关接口"><a class="header-anchor" href="#继任者-asgi-异步服务器网关接口"></a>继任者 ASGI（异步服务器网关接口）</h2><section class="reference"><p>ASGI（Asynchronous Server Gateway Interface）是 WSGI 的精神继承者，旨在在具有异步功能的 Python Web 服务器，框架和应用程序之间提供标准接口。</p></section><h2 id="asgi-服务器"><a class="header-anchor" href="#asgi-服务器"></a>ASGI 服务器</h2><section class="reference"></section><h3 id="主流实现"><a class="header-anchor" href="#主流实现"></a>主流实现</h3><section class="reference"><ul><li>Uvicorn</li><li>Daphne</li><li>Hypercorn</li></ul></section>]]></content>
     

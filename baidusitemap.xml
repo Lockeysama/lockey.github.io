@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://www.lockey.xyz/2020/04/22/%E6%9C%AF%E8%AF%AD/Web%E6%9C%8D%E5%8A%A1/</loc>
+    <lastmod>2020-06-19</lastmod>
+  </url>  <url>
+    <loc>http://www.lockey.xyz/2020/04/22/%E6%9C%AF%E8%AF%AD/%E5%90%8C%E6%AD%A5%E5%BC%82%E6%AD%A5%E9%98%BB%E5%A1%9E%E9%9D%9E%E9%98%BB%E5%A1%9E/</loc>
+    <lastmod>2020-06-19</lastmod>
+  </url>  <url>
     <loc>http://www.lockey.xyz/2019/12/31/DevOps/K8S/</loc>
     <lastmod>2020-06-19</lastmod>
   </url>  <url>
@@ -24,12 +30,6 @@
   </url>  <url>
     <loc>http://www.lockey.xyz/2020/04/22/%E5%9F%BA%E7%A1%80/Linux%E5%86%85%E6%A0%B8%E4%B8%AD%E6%96%AD/</loc>
     <lastmod>2020-04-23</lastmod>
-  </url>  <url>
-    <loc>http://www.lockey.xyz/2020/04/22/%E6%9C%AF%E8%AF%AD/%E5%90%8C%E6%AD%A5%E5%BC%82%E6%AD%A5%E9%98%BB%E5%A1%9E%E9%9D%9E%E9%98%BB%E5%A1%9E/</loc>
-    <lastmod>2020-04-22</lastmod>
-  </url>  <url>
-    <loc>http://www.lockey.xyz/2020/04/22/%E6%9C%AF%E8%AF%AD/Web%E6%9C%8D%E5%8A%A1/</loc>
-    <lastmod>2020-04-22</lastmod>
   </url>  <url>
     <loc>http://www.lockey.xyz/2020/04/02/DevOps/K8S_metrics-server_%E6%90%AD%E5%BB%BA_%E8%B8%A9%E5%9D%91/</loc>
     <lastmod>2020-04-02</lastmod>
